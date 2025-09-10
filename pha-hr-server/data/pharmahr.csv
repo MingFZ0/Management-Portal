@@ -1,0 +1,51 @@
+First name,Last name,Email,Home address,Job title,Salary,Department,Hire date
+John,Smith,john.smith@example.com,123 Main St,Research Scientist,80000,Research & Development,2022-05-10
+Emily,Johnson,emily.johnson@example.com,456 Oak Ave,Quality Control Analyst,65000,Quality Assurance,2021-09-15
+Michael,Davis,michael.davis@example.com,789 Elm St,Pharmaceutical Sales Representative,75000,Sales,2023-03-20
+Jessica,Anderson,jessica.anderson@example.com,321 Pine St,Regulatory Affairs Specialist,70000,Regulatory Affairs,2022-11-05
+Matthew,Wilson,matthew.wilson@example.com,567 Maple St,Chemical Engineer,85000,Engineering,2023-07-08
+Amanda,Martinez,amanda.martinez@example.com,890 Cedar St,Manufacturing Technician,60000,Manufacturing,2021-12-30
+Daniel,Taylor,daniel.taylor@example.com,234 Birch St,Clinical Research Coordinator,72000,Clinical Research,2022-03-12
+Sarah,Thompson,sarah.thompson@example.com,987 Pine St,Medical Writer,70000,Medical Affairs,2022-06-25
+Christopher,Thomas,christopher.thomas@example.com,654 Elm St,Pharmacist,90000,Pharmacy,2023-01-18
+Ashley,Hernandez,ashley.hernandez@example.com,321 Oak St,Supply Chain Manager,85000,Supply Chain,2021-08-05
+Kevin,Moore,kevin.moore@example.com,876 Maple St,Quality Assurance Specialist,68000,Quality Assurance,2022-02-28
+Rachel,Garcia,rachel.garcia@example.com,543 Cedar St,Analytical Chemist,70000,Research & Development,2023-09-14
+Justin,Lopez,justin.lopez@example.com,210 Pine St,Product Manager,90000,Product Management,2021-11-03
+Nicole,Morris,nicole.morris@example.com,879 Birch St,Medical Science Liaison,85000,Medical Affairs,2022-04-07
+Brandon,Clark,brandon.clark@example.com,765 Cedar St,Regulatory Affairs Manager,80000,Regulatory Affairs,2023-02-20
+Heather,Rodriguez,heather.rodriguez@example.com,321 Oak St,Research Associate,65000,Research & Development,2021-10-12
+Joshua,Lewis,joshua.lewis@example.com,543 Maple St,Quality Control Supervisor,75000,Quality Assurance,2022-08-30
+Melissa,Young,melissa.young@example.com,987 Elm St,Production Planner,68000,Manufacturing,2023-06-05
+Stephanie,Lee,stephanie.lee@example.com,678 Pine St,Clinical Data Manager,75000,Clinical Research,2021-07-22
+Andrew,Walker,andrew.walker@example.com,543 Cedar St,Sales Manager,95000,Sales,2022-01-15
+Lauren,Hall,lauren.hall@example.com,234 Elm St,Chemist,72000,Research & Development,2023-05-28
+David,Allen,david.allen@example.com,876 Oak St,Regulatory Compliance Specialist,75000,Regulatory Affairs,2021-12-10
+Megan,Scott,megan.scott@example.com,765 Cedar St,Manufacturing Engineer,80000,Manufacturing,2022-07-03
+Jacob,Green,jacob.green@example.com,210 Pine St,Pharmacologist,85000,Pharmacy,2023-10-17
+Olivia,Adams,olivia.adams@example.com,543 Elm St,Supply Chain Analyst,70000,Supply Chain,2021-09-25
+Erica,Baker,erica.baker@example.com,654 Maple St,Quality Control Chemist,68000,Quality Assurance,2022-04-18
+Ryan,Gonzalez,ryan.gonzalez@example.com,210 Oak St,Marketing Manager,90000,Marketing,2023-01-02
+Taylor,Nelson,taylor.nelson@example.com,987 Pine St,Clinical Research Scientist,80000,Clinical Research,2021-11-15
+Jordan,Carter,jordan.carter@example.com,456 Elm St,Formulation Scientist,75000,Research & Development,2022-08-08
+Kelsey,Perez,kelsey.perez@example.com,678 Maple St,Validation Engineer,78000,Engineering,2023-03-22
+Dylan,Roberts,dylan.roberts@example.com,890 Cedar St,Regulatory Affairs Associate,68000,Regulatory Affairs,2021-10-05
+Cassandra,Turner,cassandra.turner@example.com,321 Oak St,Manufacturing Supervisor,70000,Manufacturing,2022-05-18
+Tyler,Hill,tyler.hill@example.com,543 Cedar St,Pharmaceutical Marketing Specialist,80000,Marketing,2023-12-30
+Katherine,Cooper,katherine.cooper@example.com,210 Pine St,Research Technician,65000,Research & Development,2021-08-13
+Evan,Ross,evan.ross@example.com,876 Oak St,Quality Assurance Auditor,72000,Quality Assurance,2022-01-28
+Samantha,Murphy,samantha.murphy@example.com,654 Maple St,Production Manager,85000,Manufacturing,2023-06-12
+Logan,Peterson,logan.peterson@example.com,890 Cedar St,Regulatory Compliance Analyst,70000,Regulatory Affairs,2021-12-25
+Hannah,Cooper,hannah.cooper@example.com,987 Pine St,Chemical Technician,60000,Engineering,2022-07-08
+Austin,Brooks,austin.brooks@example.com,456 Elm St,Pharmacovigilance Specialist,75000,Medical Affairs,2023-02-03
+Julia,Rivera,julia.rivera@example.com,321 Oak St,Research Manager,90000,Research & Development,2021-09-16
+Nathan,Ward,nathan.ward@example.com,543 Cedar St,Quality Control Technician,68000,Quality Assurance,2022-04-30
+Madison,Diaz,madison.diaz@example.com,678 Maple St,Regulatory Affairs Coordinator,70000,Regulatory Affairs,2023-10-10
+Kyle,Bailey,kyle.bailey@example.com,890 Cedar St,Manufacturing Operator,60000,Manufacturing,2021-11-23
+Victoria,Rivera,victoria.rivera@example.com,876 Oak St,Medical Affairs Manager,85000,Medical Affairs,2022-05-05
+Gabriel,Evans,gabriel.evans@example.com,210 Pine St,Quality Control Analyst,70000,Quality Assurance,2023-08-18
+Allison,Reed,allison.reed@example.com,987 Elm St,Pharmaceutical Technician,62000,Manufacturing,2022-02-10
+Peter,Campbell,peter.campbell@example.com,654 Pine St,Research Scientist,83000,Research & Development,2023-09-05
+Emma,Stewart,emma.stewart@example.com,210 Cedar St,Regulatory Affairs Specialist,72000,Regulatory Affairs,2021-10-28
+Alexander,Hughes,alexander.hughes@example.com,543 Oak St,Chemical Analyst,70000,Quality Assurance,2022-05-15
+Grace,Morgan,grace.morgan@example.com,876 Maple St,Marketing Coordinator,65000,Marketing,2023-04-20
