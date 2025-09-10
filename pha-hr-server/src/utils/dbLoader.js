@@ -1,34 +1,14 @@
 import { readCSV } from "./csvReader.js";
-import {EJSON} from 'bson';
+import {EJSON, ObjectId} from 'bson';
 import { closeClient, connect } from "./swen343_db_utils.js";
+import { Db } from "mongodb";
 
-export async function insertUserTableData(users, data) {
-    let first = data["First name"];
-    let last = data["Last name"];
-    let email = data["Email"];
-    let address = data["Address"];
-    let result = await users.insertOne({
-        "first_name": first,
-        "last_name": last,
-        "contact": {"email": email, "address": address}})
-    .then((val) => JSON.parse(JSON.stringify(val)));
-    
-    return result["insertedId"];
-}
-
-export async function insertHireTableData(hires, data) {
-    let title = data["Job title"];
-    let salary = data["Salary"];
-    let start_date = data["Hire date"];
-    let result = await hires.insertOne({
-        "title": first,
-        "salary": last,
-        "hire_date": start_date
-    }).then((val) => JSON.parse(JSON.stringify(val)));
-    return result["insertedId"];
-}
-
-
+/**
+ * Drops and creates a new collection of the given name
+ * @param {*} myDB the db object that was returned from connect()
+ * @param {*} name the name of the collection 
+ * @returns an object representing the collection
+ */
 export async function resetDB(myDB, name) {
     console.log("Dropping and Creating:", name);
     await myDB.collection(name).drop();
@@ -36,28 +16,78 @@ export async function resetDB(myDB, name) {
     return myDB.collection(name);
 }
 
+/**
+ * 
+ * @param {*} department the db object that represents department
+ * @param {*} name the name of the department that is being searched for
+ * @returns the stringified objectId of the department within MongoDB
+ */
+export async function findDepartment(department, name) {
+    let result = await department.findOne({"name": name});
+    if (result == null) {
+        result = await department.insertOne({"name": name});
+    }
+    const department_id = await JSON.parse(JSON.stringify(result))["_id"];
+    return department_id;
+}
+
+/**
+ * 
+ * @param users the db collection 
+ * @param data the json data collection that was parsed from the csvReader
+ * @returns the stringified objectId of the user within MongoDB
+ */
+export async function insertUserTableData(users, data) {
+    let first = data["First name"];
+    let last = data["Last name"];
+    let email = data["Email"];
+    let address = data["Home address"];
+    let result = await users.insertOne({
+        "first_name": first,
+        "last_name": last,
+        "contact": {"email": email, "address": address}})
+    .then((val) => JSON.parse(JSON.stringify(val)));
+
+    return result["insertedId"];
+}
+
+export async function completeHireTableData(hires, data, user_id, department_id) {
+    let title = data["Job title"];
+    let salary = data["Salary"];
+    let start_date = data["Hire date"];
+    let result = await hires.insertOne({
+        "title": title,
+        "salary": salary,
+        "hire_date": start_date,
+        "user_id": user_id,
+        "department_id": department_id
+    }).then((val) => JSON.parse(JSON.stringify(val)));
+    return result["insertedId"];
+}
+
+/**
+ * This method kicks starts the initization of the db
+ * 
+ * @param The url to the csv file link
+ * @returns 
+ */
 export async function initDB(url)
 {
     let dataSet = await readCSV(url);
     const myDB = await connect();
     console.log(`dataSet length=${dataSet.length}`)
     
-    const users = await resetDB(myDB, "users");
-    const departments = await resetDB(myDB, "departments");
-    const hires = await resetDB(myDB, "hires");
+    const usersDB = await resetDB(myDB, "users");
+    const departmentsDB = await resetDB(myDB, "departments");
+    const hiresDB = await resetDB(myDB, "hires");
 
     let all_department = {};
 
     for (var index = 0; index < dataSet.length; index++) //Beware the async map
     {
-        let current_department = dataSet[index]["Department"];
-        all_department[current_department] = 1;
-
-        let user_id = await insertUserTableData(users, dataSet[index]);
-
-        
-        
-        
+        let department_id = await findDepartment(departmentsDB, dataSet[index]["Department"]);
+        let user_id = await insertUserTableData(usersDB, dataSet[index]);
+        await completeHireTableData(hiresDB, dataSet[index], user_id, department_id);
     }
     return;
 }
