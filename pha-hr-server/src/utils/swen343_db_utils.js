@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb'
-import 'dotenv/config'
+import 'dotenv/config';
 
 const url = `mongodb://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.URL}/${process.env.DBNAME}`
 

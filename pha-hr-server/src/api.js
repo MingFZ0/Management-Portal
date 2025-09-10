@@ -1,4 +1,4 @@
-import {connect} from './swen343_db_utils.js'
+import {connect} from './utils/swen343_db_utils.js'
 
 
 /**

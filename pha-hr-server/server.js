@@ -5,6 +5,10 @@ import  path from 'path';
 import {getAllEmployees, getCollections, getMyCollection} from './src/api.js';
 import cors from 'cors';
 
+import { readCSV } from './src/utils/csvReader.js';
+import { initDB } from './src/utils/dbLoader.js';
+
+
 
 const app = express();
 app.use(cors()); //Enable cors for client-server APIs
@@ -38,7 +42,14 @@ app.get('/mycollection',
     }
 )
 
+// readCSV("data/pharmahr.csv").then((data) => {
+//     // console.log(data);
+// })
+
 //Starts the server, listening on the specified PORT and prints a message when it starts
 app.listen(process.env.PORT, ()=> {
+    // let data = readCSV("./data/pharmahr.csv").then((re) => initDB(re));
+
+    initDB("./data/pharmahr.csv").then();
     console.log(">>> Node Express Server listening on port: " + process.env.PORT);
 } ); 
