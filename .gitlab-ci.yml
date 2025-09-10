@@ -1,0 +1,54 @@
+image:
+  name: kalrabb/mern-stack-postgres
+
+variables:
+  CURR_APP: "" #Will be changed to your React project name.  Do not modify
+  SERVER_FOLDER: server #e.g. acb123-react-client2.  Change to YOUR project 
+
+.script-run-server: &script-run-server |
+  echo "CURR APP:"$SERVER_FOLDER
+
+  #Make sure directory for the app exists
+  ls -lFa
+  if [  ! -d "$SERVER_FOLDER" ]; then
+    echo "SERVER_FOLDER not set, or directory does not exist - nothing to build!"
+  else
+    cd $SERVER_FOLDER 
+    echo "Moved to server/ project folder"
+    pwd
+    ls -l
+    cp -p gitlab.env .env
+    echo "Start mongo in background"
+    mongod --fork --logpath /var/log/mongodb/mongod.log 
+    #Wait a good long time for everything to settle down
+    sleep 10
+    pwd
+    npm install
+    echo "npm install completed"
+    node server.js &
+    sleep 5
+
+    cd test
+    echo -e "\n**** Run Jest db tests"
+    npm test db.test.js
+    npm test api.test.js
+  fi
+
+
+
+cache:
+  paths:
+  - node_modules/
+
+before_script:
+  - pwd
+  - node --version
+
+testrunner:
+  script:
+    - CI="" #Ignore warnings.  e.g. unused classes are warnings but will stop build w/o this
+    - echo "Check current directory"
+    - pwd
+    - *script-run-server  
+  stage: test
+
