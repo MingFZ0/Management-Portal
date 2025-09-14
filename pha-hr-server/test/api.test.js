@@ -1,6 +1,7 @@
 import {testPing, testDocs, testCollections} from './api'
 
 test('call ping endpoint', async() => {
+
   let result = await testPing();
   expect(result).toBe('pong');
 });

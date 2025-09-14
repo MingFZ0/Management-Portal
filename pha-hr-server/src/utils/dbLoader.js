@@ -5,9 +5,9 @@ import { Db } from "mongodb";
 
 /**
  * Drops and creates a new collection of the given name
- * @param {Db} myDB the db object that was returned from connect()
- * @param {String} name the name of the collection 
- * @returns {Db} an object representing the collection
+ * @param {*} myDB the db object that was returned from connect()
+ * @param {*} name the name of the collection 
+ * @returns an object representing the collection
  */
 export async function resetDB(myDB, name) {
     console.log("Dropping and Creating:", name);
@@ -18,9 +18,9 @@ export async function resetDB(myDB, name) {
 
 /**
  * 
- * @param {Db} department the db object that represents department
- * @param {String} name the name of the department that is being searched for
- * @returns {String} the stringified objectId of the department within MongoDB
+ * @param {*} department the db object that represents department
+ * @param {*} name the name of the department that is being searched for
+ * @returns the stringified objectId of the department within MongoDB
  */
 export async function findDepartment(department, name) {
     let result = await department.findOne({"name": name});
@@ -33,9 +33,9 @@ export async function findDepartment(department, name) {
 
 /**
  * 
- * @param {Db} users the db collection 
+ * @param users the db collection 
  * @param data the json data collection that was parsed from the csvReader
- * @returns {String} the stringified objectId of the user within MongoDB
+ * @returns the stringified objectId of the user within MongoDB
  */
 export async function insertUserTableData(users, data) {
     let first = data["First name"];
@@ -68,7 +68,7 @@ export async function completeHireTableData(hires, data, user_id, department_id)
 /**
  * This method kicks starts the initization of the db
  * 
- * @param {String} The url to the csv file link
+ * @param The url to the csv file link
  * @returns 
  */
 export async function initDB(url)

@@ -1,5 +1,5 @@
 import {getCollections} from '../src/api';
-import { closeClient } from '../src/utils/swen343_db_utils';
+import {closeClient} from '../src/swen343_db_utils';
 import 'dotenv/config'; //This is what loads the ENV variables
 
 test('Get a list of the collections', async ()=> 
