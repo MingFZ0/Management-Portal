@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import { initDB } from './src/utils/dbLoader.js';
 import users_rounter from './src/routers/users_router.js';
+import { getCollections, getMyCollection} from './src/api.js';
 
 
 
@@ -27,6 +28,16 @@ app.get('/managedb/collections',
         return result.send(JSON.stringify(res));
     }
 )
+
+//curl http://localhost:5005/mycollection  
+app.get('/mycollection', 
+    async function(req, result) 
+    {
+        let res = await getMyCollection();
+        return result.send(res);
+    }
+)
+
 
 app.get('/pharma/hr/users/api', users_rounter);
 

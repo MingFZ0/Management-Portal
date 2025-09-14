@@ -17,6 +17,15 @@ async function getCollections() {
     return names;
 }
 
+async function getMyCollection()
+{
+    const db = await connect();
+    const collection = db.collection('mycollection');
+    const mine = await collection.find({}).toArray();
+    console.log(mine);
+    return mine; 
+}
+
 /**
  * Creates an user entry in the User collection
  * @param {Json} data Consists of fields for the User :
@@ -42,4 +51,4 @@ async function getAllUsers(params) {
 }
 
 
-export {getCollections, addUser, getAllUsers};
+export {getCollections, getMyCollection, addUser, getAllUsers };

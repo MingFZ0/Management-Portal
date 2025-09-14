@@ -1,4 +1,4 @@
-import {testPing, testDocs, testCollections} from './api'
+import {testPing, testDocs, testCollections} from './api.js'
 
 test('call ping endpoint', async() => {
 
