@@ -47,8 +47,6 @@ export async function insertUserTableData(users, data) {
         "last_name": last,
         "contact": {"email": email, "address": address}})
     .then((val) => JSON.parse(JSON.stringify(val)));
-    console.log(result);
-
     return result["insertedId"];
 }
 

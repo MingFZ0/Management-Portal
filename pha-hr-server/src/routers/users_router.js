@@ -1,5 +1,4 @@
 import express from 'express';
-import {addUser} from "../api.js";
 
 var users_rounter = express.Router();
 
