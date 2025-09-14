@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
 import  path from 'path';
-import {getAllEmployees, getCollections, getMyCollection} from './src/api.js';
+import {getCollections} from './src/api.js';
 import cors from 'cors';
 
 import { readCSV } from './src/utils/csvReader.js';
@@ -29,16 +29,6 @@ app.get('/managedb/collections',
         for (const element of res)
             console.log(element);
         return result.send(JSON.stringify(res));
-    }
-)
-
-//Will list the contents of the collection named 'mycollection' 
-//curl http://localhost:5005/mycollection  
-app.get('/mycollection', 
-    async function(req, result) 
-    {
-        let res = await getMyCollection();
-        return result.send(res);
     }
 )
 
