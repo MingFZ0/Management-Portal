@@ -1,4 +1,5 @@
-//#region General
+import { connect } from "./utils/swen343_db_utils.js";
+
 
 /**
  * getCollections(): is a function that is responsible for allowing you
@@ -15,11 +16,6 @@ async function getCollections() {
     }
     return names;
 }
-    //#endregion
-
-//#region Users
-
-import { connect } from "./utils/swen343_db_utils";
 
 /**
  * Creates an user entry in the User collection
@@ -45,59 +41,5 @@ async function getAllUsers(params) {
     return result;
 }
 
-async function getUser(params) {
-    
-}
 
-async function updateUser(params) {
-    
-}
-
-async function deleteUser(params) {
-    
-}
-    //#endregion
-
-//#region Departments
-async function createDepartment(params) {
-    
-}
-
-async function getAllDepartment(params) {
-    
-}
-
-async function getDepartment(params) {
-    
-}
-
-async function updateDepartment(params) {
-    
-}
-
-async function deleteDepartment(params) {
-    
-}
-    //#endregion
-
-//#region Hires
-async function createHire() {
-
-}
-
-async function getAllHires(params) {
-    
-}
-
-async function getHire(params) {
-    
-}
-
-async function updateHire(params) {
-    
-}
-
-async function deleteHire(params) {
-    
-}
-    //#endregion
+export {getCollections, addUser, getAllUsers};

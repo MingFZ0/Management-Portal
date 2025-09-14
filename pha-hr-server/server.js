@@ -2,17 +2,16 @@ import express from 'express';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
 import  path from 'path';
-// import {getCollections} from './src/api.js';
 import cors from 'cors';
 
 import { initDB } from './src/utils/dbLoader.js';
+import users_rounter from './src/routers/users_router.js';
 
 
 
 const app = express();
 app.use(cors()); //Enable cors for client-server APIs
 app.use(express.json());//Enables simpe data extraction for RESTful API data
-
 
 //curl http://localhost:5005/ping
 app.get('/ping', function (req, res) {return res.send('pong');});
@@ -28,6 +27,8 @@ app.get('/managedb/collections',
         return result.send(JSON.stringify(res));
     }
 )
+
+app.get('/pharma/hr/users/api', users_rounter);
 
 //Starts the server, listening on the specified PORT and prints a message when it starts
 app.listen(process.env.PORT, ()=> {
