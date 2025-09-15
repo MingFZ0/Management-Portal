@@ -1,21 +1,21 @@
 import express from 'express';
-import { addUser, getAllUsers, getUserCount } from '../api.js';
+import { addToCollection, getAllItemFromCollection,getCollectionCount} from '../api.js';
 
 var users_rounter = express.Router();
 
 users_rounter.post('/', 
     async function(req, response)
     {
-        console.log("Post:", req.body);
-        addUser(req.body);
+        console.log("Post to users:", req.body);
+        addToCollection(req.body, "users");
         return response.send("ok");
     }
 )
 
 users_rounter.get('/', 
     async function(req, response) {
-        console.log("Get All:")
-        let cursor = await getAllUsers();
+        console.log("Get All From:" + "users")
+        let cursor = await getAllItemFromCollection("users");
         
         let result = [];
         for await (const element of cursor) {
@@ -29,12 +29,13 @@ users_rounter.get('/',
 
 users_rounter.get('/count', 
     async function(req, response) {
-        console.log("Get User Count:")
-        let result = await getUserCount();
+        console.log("Get Count From:" + "users")
+        let result = await getCollectionCount("users");
         console.log(result);
         return response.send({count: result});
     }
 )
+
 
 
 

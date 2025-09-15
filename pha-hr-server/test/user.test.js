@@ -12,6 +12,5 @@ test('Call add user', async() => {
 
   const count2 = await (await fetch(url + "count")).json();
 
-  expect(count2["count"]).toBe(count1["count"] + 1);
-  
+  expect(count2["count"]).toBe(count1["count"] + 1); 
 });

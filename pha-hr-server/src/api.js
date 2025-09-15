@@ -36,31 +36,33 @@ async function getMyCollection()
  * @returns {Json} mongo's return data :
  *      {ackowledged: bol, insertedId: id string}
  */
-async function addUser(data) {
+async function addToCollection(data, collectionName) {
     const db = await connect();
-    const users = db.collection("users");
-    const result = await users.insertOne(data).then((val) => JSON.parse(JSON.stringify(val)));
-    console.log("Added User");
+    const collection = db.collection(collectionName);
+    const result = await collection.insertOne(data).then((val) => JSON.parse(JSON.stringify(val)));
+    console.log("Added to " + collectionName);
     return result;
 }
 
-async function getUser() {
-    
+async function getItemFromCollection(data, collectionName) {
+    const db = await connect();
+    const collection = db.collection(data, collectionName);
+    const result = await collection.find(data)
 }
 
-async function getAllUsers() {
+async function getAllItemFromCollection(collectionName) {
     const db = await connect();
-    const users = db.collection("users");
-    const result = await users.find();
+    const collection = db.collection(collectionName);
+    const result = await collection.find();
     return result;
 }
 
-async function getUserCount() {
+async function getCollectionCount(collectionName) {
     const db = await connect();
-    const users = db.collection("users");
-    const result = await users.countDocuments();
+    const collection = db.collection(collectionName);
+    const result = await collection.countDocuments();
     return result;
 }
 
 
-export {getCollections, getMyCollection, addUser, getAllUsers, getUserCount};
+export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount};
