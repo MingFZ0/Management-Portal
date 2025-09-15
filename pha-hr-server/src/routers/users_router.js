@@ -1,5 +1,6 @@
-import express from 'express';
-import { addToCollection, getAllItemFromCollection,getCollectionCount} from '../api.js';
+import express, { json } from 'express';
+import { addToCollection, getAllItemFromCollection,getCollectionCount, getItemFromCollection} from '../api.js';
+import { ObjectId } from 'mongodb';
 
 var users_rounter = express.Router();
 
@@ -12,31 +13,52 @@ users_rounter.post('/',
     }
 )
 
-users_rounter.get('/', 
-    async function(req, response) {
-        console.log("Get All From:" + "users")
-        let cursor = await getAllItemFromCollection("users");
-        
-        let result = [];
-        for await (const element of cursor) {
-            result.push(element)
-        }
-
-        console.log(result);
-        return response.send(result);
-    }
-)
-
 users_rounter.get('/count', 
     async function(req, response) {
-        console.log("Get Count From:" + "users")
+        console.log("Get Count From " + "users")
         let result = await getCollectionCount("users");
         console.log(result);
         return response.send({count: result});
     }
 )
 
+users_rounter.get('/', 
+    async function(req, response) {
+        // console.log(req.baseUrl,req.url);
+        // console.log(req.query);//Look at all query string params
+        // console.log(req.query['id']);
+        let result = null;
+        if (req.url.length > 1) {
+            result = await getUserById(req.query);
+        }
+        else {result = await getAllUser();}
 
+        return response.send(result);
+        
+    }
+)
+
+async function getAllUser() {
+    console.log("Get All From " + "users");
+    let cursor = await getAllItemFromCollection("users");
+    let result = [];
+    for await (const element of cursor) {
+        result.push(element)
+    }
+
+    // console.log(result);
+    return result;
+}
+
+async function getUserById(data) {
+    const id = data["id"];
+    let filter = {'_id': await ObjectId.createFromHexString(id)};
+    console.log("Search From users by ID: " + id);
+    
+    let result = await getItemFromCollection(filter, "users");
+    return result[0];
+
+}
 
 
 

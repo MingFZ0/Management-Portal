@@ -46,8 +46,10 @@ async function addToCollection(data, collectionName) {
 
 async function getItemFromCollection(data, collectionName) {
     const db = await connect();
-    const collection = db.collection(data, collectionName);
-    const result = await collection.find(data)
+    const collection = db.collection(collectionName);
+    const result = await collection.find(data).toArray();
+    console.log("Found: " + result);
+    return result;
 }
 
 async function getAllItemFromCollection(collectionName) {
