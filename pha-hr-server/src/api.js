@@ -40,10 +40,15 @@ async function addUser(data) {
     const db = await connect();
     const users = db.collection("users");
     const result = await users.insertOne(data).then((val) => JSON.parse(JSON.stringify(val)));
+    console.log("Added User");
     return result;
 }
 
-async function getAllUsers(params) {
+async function getUser() {
+    
+}
+
+async function getAllUsers() {
     const db = await connect();
     const users = db.collection("users");
     const result = await users.find();
