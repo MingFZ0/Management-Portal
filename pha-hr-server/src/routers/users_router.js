@@ -8,8 +8,8 @@ users_rounter.post('/',
     async function(req, response)
     {
         console.log("Post to users:", req.body);
-        addToCollection(req.body, "users");
-        return response.send("ok");
+        let result = await addToCollection(req.body, "users");
+        return response.send(result);
     }
 )
 
@@ -28,9 +28,8 @@ users_rounter.get('/',
         // console.log(req.query);//Look at all query string params
         // console.log(req.query['id']);
         let result = null;
-        if (req.url.length > 1) {
-            result = await getUserById(req.query);
-        }
+        console.log(req.body);
+        if (req.url.length > 1) {result = await getUsersByDetail(req.body);} 
         else {result = await getAllUser();}
 
         return response.send(result);
@@ -50,14 +49,10 @@ async function getAllUser() {
     return result;
 }
 
-async function getUserById(data) {
-    const id = data["id"];
-    let filter = {'_id': await ObjectId.createFromHexString(id)};
-    console.log("Search From users by ID: " + id);
-    
-    let result = await getItemFromCollection(filter, "users");
-    return result[0];
-
+async function getUsersByDetail(filter) {
+    console.log("Get Users By: " + filter)
+    const result = await getItemFromCollection(filter, "users");
+    return result;
 }
 
 
