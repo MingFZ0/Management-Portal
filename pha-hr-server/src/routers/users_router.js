@@ -60,7 +60,7 @@ users_rounter.post('/',
 
 users_rounter.get('/count', 
     async function(req, response) {
-        console.log("Get Count From " + "users")
+        console.log("Get Count From " + "users");
         let result = await getCollectionCount("users");
         console.log(result);
         return response.send({count: result});
