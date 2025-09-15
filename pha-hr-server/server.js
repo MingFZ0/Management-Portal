@@ -39,7 +39,7 @@ app.get('/mycollection',
 )
 
 
-app.use('/pharma/hr/users/api', users_rounter);
+app.use('/pharma/hr/api/users/', users_rounter);
 
 //Starts the server, listening on the specified PORT and prints a message when it starts
 app.listen(process.env.PORT, ()=> {

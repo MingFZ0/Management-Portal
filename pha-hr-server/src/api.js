@@ -55,5 +55,12 @@ async function getAllUsers() {
     return result;
 }
 
+async function getUserCount() {
+    const db = await connect();
+    const users = db.collection("users");
+    const result = await users.countDocuments();
+    return result;
+}
 
-export {getCollections, getMyCollection, addUser, getAllUsers };
+
+export {getCollections, getMyCollection, addUser, getAllUsers, getUserCount};

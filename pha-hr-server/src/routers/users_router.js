@@ -1,5 +1,5 @@
 import express from 'express';
-import { addUser, getAllUsers } from '../api.js';
+import { addUser, getAllUsers, getUserCount } from '../api.js';
 
 var users_rounter = express.Router();
 
@@ -24,6 +24,15 @@ users_rounter.get('/',
 
         console.log(result);
         return response.send(result);
+    }
+)
+
+users_rounter.get('/count', 
+    async function(req, response) {
+        console.log("Get User Count:")
+        let result = await getUserCount();
+        console.log(result);
+        return response.send({count: result});
     }
 )
 
