@@ -3,6 +3,7 @@ import { connect } from "./utils/swen343_db_utils.js";
 
 // curl --header "Content-Type: application/json" --request POST --data '{"item":"something","price":"9.95", "vegetarian": "no"}' http://localhost:5005/restaurant/api/menu
 // curl --header "Content-Type: application/json" --request PUT --data '{"_id":"68c82e4a3cfe3c0b73c3a042","first_name":"sam"}' http://localhost:5005/pharma/hr/api/users
+// curl --header "Content-Type: application/json" --request DELETE http://localhost:5005/pharma/hr/api/users?_id=
 
 /**
  * getCollections(): is a function that is responsible for allowing you
@@ -51,7 +52,7 @@ async function getItemFromCollection(data, collectionName) {
     const db = await connect();
     const collection = db.collection(collectionName);
     const result = await collection.find(data).toArray();
-    console.log("Found: " + result);
+    // console.log("Found: " + result);
     return result;
 }
 
@@ -83,7 +84,25 @@ async function updateDocumentInCollection(data, collectionName) {
     return result;
 }
 
+async function deleteDocumentInCollection(filter, collectionName){
+    const db = await connect();
+    const collection = db.collection(collectionName);
+    const result = await collection.deleteOne(filter);
+    const strResult = await JSON.stringify(result);
+    console.log("Deleted:" + strResult);
+    return result;
+}
+
+async function deleteMultiDocumentsInCollection(filter, collectionName){
+    const db = await connect();
+    const collection = db.collection(collectionName);
+    const result = await collection.deleteMany(filter);
+    const strResult = await JSON.stringify(result);
+    console.log("Deleted:" + strResult);
+    return result;
+}
+
 
 export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount,
-    updateDocumentInCollection
+    updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection
 };

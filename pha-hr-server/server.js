@@ -6,7 +6,7 @@ import cors from 'cors';
 
 import { initDB } from './src/utils/dbLoader.js';
 import users_rounter from './src/routers/users_router.js';
-import { getCollections, getMyCollection} from './src/api.js';
+import { getCollectionCount, getCollections, getMyCollection} from './src/api.js';
 
 
 
@@ -38,6 +38,17 @@ app.get('/mycollection',
     }
 )
 
+app.get('/pharma/hr/api/init',
+    async function(req, response) {
+        console.log("Resetting DB...");
+        await initDB("./data/pharmahr.csv");
+        let result = await getCollectionCount("users");
+
+        let returnResult = await JSON.stringify({"count":result})
+        console.log(returnResult);
+        return response.send(returnResult);
+    }
+)
 
 app.use('/pharma/hr/api/users/', users_rounter);
 
