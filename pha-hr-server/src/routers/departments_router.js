@@ -1,5 +1,6 @@
 import express, { json } from 'express';
-import { addToCollection, getCollectionCount } from '../api';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemFromCollection, updateDocumentInCollection} from '../api.js';
+import { BSON, ObjectId } from 'mongodb';
 
 var departments_router = express.Router();
 
@@ -7,7 +8,7 @@ async function deleteDepartmentByID(id) {
     console.log("Deleting department of ID: " + id);
 
     let filter = {"_id": await ObjectId.createFromHexString(id)};
-    const result = await deleteDocumentInCollection(id, "departments");
+    const result = await deleteDocumentInCollection(filter, "departments");
     return result;
 }
 
@@ -66,7 +67,7 @@ departments_router.get('/',
     async function(req, response) {
         let result = null;
         console.log(req.query);
-        if (req.url.length > 1) {result = await getDepartment();} 
+        if (req.url.length > 1) {result = await getDepartment(req.query);} 
         else {result = await getAllDepartments();}
         return response.send(result);
     }
@@ -80,7 +81,7 @@ departments_router.put('/',
     }
 )
 
-users_rounter.delete('/',
+departments_router.delete('/',
     async function(req, response) {
 
         let result;
@@ -91,6 +92,5 @@ users_rounter.delete('/',
         return response.send(returnResult);
     }
 )
-
 
 export default departments_router;

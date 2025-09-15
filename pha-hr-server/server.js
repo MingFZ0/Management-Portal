@@ -6,8 +6,9 @@ import cors from 'cors';
 
 import { initDB } from './src/utils/dbLoader.js';
 import users_rounter from './src/routers/users_router.js';
-import { getCollectionCount, getCollections, getMyCollection} from './src/api.js';
 import departments_router from './src/routers/departments_router.js';
+
+import { getCollectionCount, getCollections, getMyCollection} from './src/api.js';
 
 
 
