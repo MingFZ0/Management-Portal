@@ -1,5 +1,8 @@
+import { ObjectId } from "mongodb";
 import { connect } from "./utils/swen343_db_utils.js";
 
+// curl --header "Content-Type: application/json" --request POST --data '{"item":"something","price":"9.95", "vegetarian": "no"}' http://localhost:5005/restaurant/api/menu
+// curl --header "Content-Type: application/json" --request PUT --data '{"_id":"68c82e4a3cfe3c0b73c3a042","first_name":"sam"}' http://localhost:5005/pharma/hr/api/users
 
 /**
  * getCollections(): is a function that is responsible for allowing you
@@ -66,5 +69,21 @@ async function getCollectionCount(collectionName) {
     return result;
 }
 
+async function updateDocumentInCollection(data, collectionName) {
+    const db = await connect();
+    const collection = db.collection(collectionName);
 
-export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount};
+    let idValue = data['_id'];
+    const filter = { _id: ObjectId.createFromHexString(idValue) };
+
+    // Specify the update to set values using _id as the filter ("WHERE" clause)
+    delete data._id; //Get rid of the immutable _id prop otherwise mongo will complain
+    const updateDoc = { $set: data };//Update the whole row.  $set is the mongo cmd to set the doc fields
+    const result = await collection.updateOne(filter, updateDoc);
+    return result;
+}
+
+
+export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount,
+    updateDocumentInCollection
+};

@@ -35,11 +35,12 @@ test('Add user and check for id', async() => {
   const id = postResult["insertedId"];
   console.log(id);
 
-  let fetchUrl = "http://localhost:5005/pharma/hr/api/users?id=" + id;
+  let fetchUrl = "http://localhost:5005/pharma/hr/api/users?_id=" + id;
   const filter = {'_id': ObjectId.createFromHexString(id)};
   const getResult = await (await fetch(fetchUrl)).json();
 
   console.log(getResult);
+  expect(getResult.length).toBeGreaterThan(0);
 });
 
 
