@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { initDB } from "../src/utils/dbLoader";
 import { closeClient } from "../src/utils/swen343_db_utils";
 
-beforeAll(() => {
+beforeEach(() => {
   return initDB("./data/pharmahr.csv").then();
 })
 
