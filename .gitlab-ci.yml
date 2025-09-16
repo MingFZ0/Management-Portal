@@ -32,6 +32,9 @@ variables:
     echo -e "\n**** Run Jest db tests"
     npm test db.test.js
     npm test api.test.js
+    npm test users.test.js
+    npm test departments.test.js
+    npm test hires.test.js
   fi
 
 
