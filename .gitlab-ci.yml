@@ -3,7 +3,7 @@ image:
 
 variables:
   CURR_APP: "" #Will be changed to your React project name.  Do not modify
-  SERVER_FOLDER: server #e.g. acb123-react-client2.  Change to YOUR project 
+  SERVER_FOLDER: pha-hr-server #e.g. acb123-react-client2.  Change to YOUR project 
 
 .script-run-server: &script-run-server |
   echo "CURR APP:"$SERVER_FOLDER
