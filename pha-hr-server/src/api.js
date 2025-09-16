@@ -43,8 +43,9 @@ async function getMyCollection()
 async function addToCollection(data, collectionName) {
     const db = await connect();
     const collection = db.collection(collectionName);
-    const result = await collection.insertOne(data).then((val) => JSON.parse(JSON.stringify(val)));
+    const result = await collection.insertOne(data).then();
     console.log("Added to " + collectionName);
+    console.log(result);
     return result;
 }
 
@@ -102,7 +103,63 @@ async function deleteMultiDocumentsInCollection(filter, collectionName){
     return result;
 }
 
+async function getAllHiresFromCollection() {
+    const db = await connect();
+    const hires = db.collection("hires");
+    let aggCursor = hires.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user_id",
+                    foreignField: "_id",
+                    as: "result"
+                }
+            }, 
+            {
+                $lookup: {
+                    from: "departments",
+                    localField: "department_id",
+                    foreignField: "_id",
+                    as: "res"
+                }
+            },
+            {
+                $addFields: {
+                    result: {
+                        $arrayElemAt: ["$result", 0]
+                    }
+                }
+            },
+            { 
+                $project: {
+                    "first_name": "$result.first_name",
+                    "last_name": "$result.last_name",
+                    "contact": "$result.contact",
+                    "department": "$res.name",
+                    "title": "$title",
+                    "salary": "$salary"
+                }
+            }
+    ]);
+    
+    let joinedData = [];
+    for await (const element of aggCursor) {
+        joinedData.push(element);
+    }
+    return joinedData;
+}
+
+async function getHireByID(filter) {
+    const db = await connect();
+    const hires = db.collection("hires");
+    
+    const hire_id = {"_id": ObjectId.createFromHexString(filter["_id"])};
+    
+    const result = await hires.findOne(hire_id);
+    return result;
+}
+
 
 export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount,
-    updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection
+    updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getHireByID
 };
