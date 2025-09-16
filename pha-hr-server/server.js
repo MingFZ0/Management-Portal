@@ -9,6 +9,7 @@ import users_rounter from './src/routers/users_router.js';
 import departments_router from './src/routers/departments_router.js';
 
 import { getCollectionCount, getCollections, getMyCollection} from './src/api.js';
+import hires_router from './src/routers/hires_router.js';
 
 
 
@@ -54,6 +55,7 @@ app.get('/pharma/hr/api/init',
 
 app.use('/pharma/hr/api/users/', users_rounter);
 app.use('/pharma/hr/api/departments/', departments_router);
+app.use('/pharma/hr/api/hires/', hires_router);
 
 //Starts the server, listening on the specified PORT and prints a message when it starts
 app.listen(process.env.PORT, ()=> {

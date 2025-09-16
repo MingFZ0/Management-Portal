@@ -23,11 +23,14 @@ export async function resetDB(myDB, name) {
  * @returns the stringified objectId of the department within MongoDB
  */
 export async function findDepartment(department, name) {
-    let result = await department.findOne({"name": name});
-    if (result == null) {
-        result = await department.insertOne({"name": name});
-    }
-    const department_id = await JSON.parse(JSON.stringify(result))["_id"];
+    let result;
+    if (result == null) {result = await department.insertOne({"name": name});    
+    } else {result = await department.findOne({"name": name});}
+    
+    // let returnData = await JSON.stringify(result);
+    // let parsedData = await JSON.parse(returnData);
+    const department_id = await result["insertedId"];
+    // console.log();
     return department_id;
 }
 
@@ -46,7 +49,7 @@ export async function insertUserTableData(users, data) {
         "first_name": first,
         "last_name": last,
         "contact": {"email": email, "address": address}})
-    .then((val) => JSON.parse(JSON.stringify(val)));
+    .then();
     return result["insertedId"];
 }
 
