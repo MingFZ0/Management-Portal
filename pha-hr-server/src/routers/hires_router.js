@@ -4,14 +4,10 @@ import { BSON, ObjectId } from 'mongodb';
 
 
 async function updateHire(input) {
-    let department_id = input["department_id"];
-    let id = input["_id"];
-    let salary = input[""];
-
     const bodyData = {
-        "_id": await ObjectId.createFromHexString(input["_id"]),
-        "department_id": await ObjectId.createFromHexString(input["department_id"]),
-        "user_id": await ObjectId.createFromHexString(input["user_id"]),
+        "_id": input["_id"],
+        "department_id": input["department_id"],
+        "user_id": input["user_id"],
         "title": input["title"],
         "salary": input["salary"]
     };
@@ -57,12 +53,15 @@ async function createDepartmentForHire(name) {
 
 async function createHireInformation(input, user_id, department_id) {
     let data = await JSON.stringify(input);
+    console.log("Hire Info: " + data);
+    console.log("   - user_id: " + user_id);
+    console.log("   - department_id: " + department_id);
     const combinedData = {
-        "title": data["title"],
-        "salary": data["salary"],
-        "hire_date": data["hire_data"],
         "user_id": user_id,
-        "department_id": department_id
+        "department_id": department_id,
+        "title": input["title"],
+        "salary": input["salary"],
+        "hire_date": input["hire_date"]
     };
 
     const result = await addToCollection(combinedData, "hires");
@@ -77,7 +76,7 @@ hires_router.post('/',
         console.log("Posting new hire...");
         console.log(" - Create new user");
         let userResult = await createUserForHire(req.body);
-        const userID = userResult["insertedId"];
+        const userID = await userResult["insertedId"];
         // console.log(userID);
         console.log("   - " + userResult);
 
@@ -91,9 +90,10 @@ hires_router.post('/',
             department = await createDepartmentForHire(req.body["name"]);
             console.log("   - Create new department: " + department);
         }
-        departmentID = department["_id"];
+        departmentID = await department["insertedId"];
 
         console.log(" - Creating Hire...");
+        console.log(userID, departmentID);
         let hireResult = await JSON.stringify(await createHireInformation(req.body, userID, departmentID));
         console.log("   - Created Hire: " + hireResult);
         return response.send(hireResult);
@@ -105,7 +105,7 @@ hires_router.get('/',
     {
         console.log(req.query);
         let result = null;
-        if (req.query.length = 0) {result = await getAllHires();}
+        if (req.query["_id"] == null) {result = await getAllHires();}
         else {
             console.log("Get Hire By Detail: " + await JSON.stringify(req.query));
             result = await getHireByID(req.query);
@@ -120,8 +120,8 @@ hires_router.put('/',
     {
         let displayInput = await JSON.stringify(req.body);
         console.log("Putting data: " + displayInput);
-        const result = updateHire(req.body);
-        return result;
+        const result = await updateHire(req.body);
+        return response.send(result);
 
     }
 )
@@ -132,8 +132,8 @@ hires_router.delete('/',
         console.log("Deleting data: " + display);
 
         let bodyData = {"_id": await ObjectId.createFromHexString(req.body['_id'])};
-        const result = deleteDocumentInCollection(bodyData, "hires");
-        return result;
+        const result = await deleteDocumentInCollection(bodyData, "hires");
+        return response.send(result);
     }
 )
 
