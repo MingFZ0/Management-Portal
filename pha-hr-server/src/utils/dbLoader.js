@@ -24,11 +24,16 @@ export async function resetDB(myDB, name) {
  */
 export async function findDepartment(department, departName) {
     let result;
-
+    let department_id;
     let searchResult = await department.findOne({"name": departName});
-    if (searchResult == null) {result = await department.insertOne({"name": departName})}
-    else {result = searchResult;}
-    const department_id = await result["insertedId"];
+    if (searchResult == null) {
+        result = await department.insertOne({"name": departName});
+        department_id = await result["insertedId"];
+    }
+    else {
+        department_id = searchResult["_id"];
+    }
+    
     return department_id;
 }
 
@@ -87,6 +92,7 @@ export async function initDB(url)
     {
         let department_id = await findDepartment(departmentsDB, dataSet[index]["Department"]);
         let user_id = await insertUserTableData(usersDB, dataSet[index]);
+        // console.log(department_id);
         await completeHireTableData(hiresDB, dataSet[index], user_id, department_id);
     }
     return;
