@@ -22,15 +22,13 @@ export async function resetDB(myDB, name) {
  * @param {*} name the name of the department that is being searched for
  * @returns the stringified objectId of the department within MongoDB
  */
-export async function findDepartment(department, name) {
+export async function findDepartment(department, departName) {
     let result;
-    if (result == null) {result = await department.insertOne({"name": name});    
-    } else {result = await department.findOne({"name": name});}
-    
-    // let returnData = await JSON.stringify(result);
-    // let parsedData = await JSON.parse(returnData);
+
+    let searchResult = await department.findOne({"name": departName});
+    if (searchResult == null) {result = await department.insertOne({"name": departName})}
+    else {result = searchResult;}
     const department_id = await result["insertedId"];
-    // console.log();
     return department_id;
 }
 
@@ -92,14 +90,6 @@ export async function initDB(url)
         await completeHireTableData(hiresDB, dataSet[index], user_id, department_id);
     }
     return;
-}
-
-
-
-
-
-export async function test() {
-    
 }
 
 

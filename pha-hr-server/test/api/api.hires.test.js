@@ -1,9 +1,9 @@
 import { json } from "express";
 import { ObjectId } from "mongodb";
-import { initDB } from "../src/utils/dbLoader";
-import { closeClient } from "../src/utils/swen343_db_utils";
+import { initDB } from "../../src/utils/dbLoader";
+import { closeClient } from "../../src/utils/swen343_db_utils";
 
-beforeEach(() => {
+beforeAll(() => {
   return initDB("./data/pharmahr.csv").then();
 })
 

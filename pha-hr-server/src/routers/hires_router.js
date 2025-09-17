@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getAllItemFromCollection,getCollectionCount, getHireByID, getItemFromCollection, updateDocumentInCollection} from '../api.js';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getAllItemFromCollection,getCollectionCount, getHireByID, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
 import { BSON, ObjectId } from 'mongodb';
 
 
@@ -38,7 +38,7 @@ async function createUserForHire(input) {
 
 async function getDepartmentOfHire(name) {
     let nameFilter = {"name": name};
-    const cursor = await getItemFromCollection(nameFilter, "departments");
+    const cursor = await getItemsFromCollection(nameFilter, "departments");
     
     let department = [];
     for await (const element of cursor) {department.push(element);}

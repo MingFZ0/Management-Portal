@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemFromCollection, updateDocumentInCollection} from '../api.js';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
 import { BSON, ObjectId } from 'mongodb';
 
 async function getAllUser() {
@@ -21,8 +21,8 @@ async function getUsersByDetail(filter) {
     let cursor;
     if (filter["_id"] != null) {
         let idFilter = {"_id": await ObjectId.createFromHexString(filter["_id"])};
-        cursor = await getItemFromCollection(idFilter, "users");
-    } else {cursor = await getItemFromCollection(filter, "users");}
+        cursor = await getItemsFromCollection(idFilter, "users");
+    } else {cursor = await getItemsFromCollection(filter, "users");}
 
     let result = [];
     for await (const element of cursor) {

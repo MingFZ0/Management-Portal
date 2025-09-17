@@ -30,6 +30,33 @@ async function getMyCollection()
     return mine; 
 }
 
+async function getItemsFromCollection(data, collectionName) {
+    const db = await connect();
+    const collection = db.collection(collectionName);
+    const result = await collection.find(data).toArray();
+    // console.log("Found: " + result);
+    return result;
+}
+
+/**
+ * 
+ * @param {*} collectionName 
+ * @returns an array that contains all of the items
+ */
+async function getAllItemFromCollection(collectionName) {
+    const db = await connect();
+    const collection = db.collection(collectionName);
+    const result = await collection.find().toArray();
+    return result;
+}
+
+async function getCollectionCount(collectionName) {
+    const db = await connect();
+    const collection = db.collection(collectionName);
+    const result = await collection.countDocuments();
+    return result;
+}
+
 /**
  * Creates an user entry in the User collection
  * @param {Json} data Consists of fields for the User :
@@ -49,28 +76,12 @@ async function addToCollection(data, collectionName) {
     return result;
 }
 
-async function getItemFromCollection(data, collectionName) {
-    const db = await connect();
-    const collection = db.collection(collectionName);
-    const result = await collection.find(data).toArray();
-    // console.log("Found: " + result);
-    return result;
-}
-
-async function getAllItemFromCollection(collectionName) {
-    const db = await connect();
-    const collection = db.collection(collectionName);
-    const result = await collection.find();
-    return result;
-}
-
-async function getCollectionCount(collectionName) {
-    const db = await connect();
-    const collection = db.collection(collectionName);
-    const result = await collection.countDocuments();
-    return result;
-}
-
+/**
+ * 
+ * @param {*} data Must contain "_id" for document to be updated
+ * @param {*} collectionName 
+ * @returns 
+ */
 async function updateDocumentInCollection(data, collectionName) {
     const db = await connect();
     const collection = db.collection(collectionName);
@@ -160,6 +171,6 @@ async function getHireByID(filter) {
 }
 
 
-export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemFromCollection, getCollectionCount,
+export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemsFromCollection, getCollectionCount,
     updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getHireByID
 };

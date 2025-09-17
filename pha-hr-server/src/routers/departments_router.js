@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemFromCollection, updateDocumentInCollection} from '../api.js';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
 import { BSON, ObjectId } from 'mongodb';
 
 var departments_router = express.Router();
@@ -34,8 +34,8 @@ async function getDepartment(filter) {
     let cursor;
     if (filter["_id"] != null) {
         let idFilter = {"_id": await ObjectId.createFromHexString(filter["_id"])};
-        cursor = await getItemFromCollection(idFilter, "departments");
-    } else {cursor = await getItemFromCollection(filter, "departments");}
+        cursor = await getItemsFromCollection(idFilter, "departments");
+    } else {cursor = await getItemsFromCollection(filter, "departments");}
 
     let result = [];
     for await (const element of cursor) {
