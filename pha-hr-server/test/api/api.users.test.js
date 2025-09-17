@@ -27,7 +27,7 @@ test('POST user; Check count', async() => {
   expect(count2["count"]).toBe(count1["count"] + 1); 
 });
 
-test('Find all users', async() => {
+test('GET all users', async() => {
   let url = 'http://localhost:5005/pharma/hr/api/users/';
   const result1 = await (await fetch(url)).json();
   const result2 = await (await fetch(url + "count")).json();
@@ -101,6 +101,5 @@ test("DELETE user", async() => {
 
   console.log(getResult);
   expect(getResult.length).toBe(0);
-
 })
 

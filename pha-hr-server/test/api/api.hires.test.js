@@ -18,7 +18,7 @@ test("List Hires", async() => {
     expect(result1.length).toBe(50);
 })
 
-test("Create Hire and search by id", async() => {
+test("POST Hire: check id", async() => {
     let url = 'http://localhost:5005/pharma/hr/api/hires';
     let bodyData = await JSON.stringify({
         "first_name": "Johnny",
@@ -44,7 +44,7 @@ test("Create Hire and search by id", async() => {
 
 });
 
-test("Put Hire", async() => {
+test("PUT Hire", async() => {
     let url = 'http://localhost:5005/pharma/hr/api/hires';
     let bodyData = await JSON.stringify({
         "first_name": "Bobmen",
@@ -82,7 +82,7 @@ test("Put Hire", async() => {
     expect(searchResult["hire_date"]).toBe("2021-07-08");
 })
 
-test("Delete Hire", async() => {
+test("DELETE Hire", async() => {
     let url = 'http://localhost:5005/pharma/hr/api/hires';
     let bodyData = await JSON.stringify({
         "first_name": "Ballistic",

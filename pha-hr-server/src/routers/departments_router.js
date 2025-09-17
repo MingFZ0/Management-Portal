@@ -5,7 +5,7 @@ import { BSON, ObjectId } from 'mongodb';
 var departments_router = express.Router();
 
 async function deleteDepartmentByID(id) {
-    console.log("Deleting department of ID: " + id);
+    // console.log("Deleting department of ID: " + id);
 
     let filter = {"_id": await ObjectId.createFromHexString(id)};
     const result = await deleteDocumentInCollection(filter, "departments");
@@ -18,7 +18,7 @@ async function deleteDepartmentbyDetail(filter) {
 }
 
 async function getAllDepartments() {
-    console.log("Get All From departments");
+    // console.log("Get All From departments");
     let cursor = await getAllItemFromCollection("departments");
     let result = [];
     for await (const element of cursor) {
@@ -29,7 +29,7 @@ async function getAllDepartments() {
 
 async function getDepartment(filter) {
     let details = await JSON.stringify(filter);
-    console.log("Get Department By: " + details);
+    // console.log("Get Department By: " + details);
 
     let cursor;
     if (filter["_id"] != null) {
@@ -41,24 +41,28 @@ async function getDepartment(filter) {
     for await (const element of cursor) {
         result.push(element);
     }
-
-    console.log(result);
     return result;
 }
 
 departments_router.post('/',
     async function(req, response) {
-        console.log("Post to departments:", req.body);
+        console.log("POST " + req.url , req.body);
+
+        let check = await getItemsFromCollection(req.body, "departments");
+        if (check[0] != null) {
+            return response.status(404).send({"response": "Department already exist"});
+        }
+
         let result = await addToCollection(req.body, "departments");
+
         return response.send(result);
     }
 )
 
 departments_router.get('/count',
     async function(req, response) {
-        console.log("Get Count From " + "departments");
+        console.log("GET Count: " + req.url , req.body);
         let result = await getCollectionCount("departments");
-        console.log(result);
         return response.send({count: result});
     }
 )
@@ -66,7 +70,7 @@ departments_router.get('/count',
 departments_router.get('/',
     async function(req, response) {
         let result = null;
-        console.log(req.query);
+        console.log("GET " + req.url , req.body);
         if (req.url.length > 1) {result = await getDepartment(req.query);} 
         else {result = await getAllDepartments();}
         return response.send(result);
@@ -75,7 +79,7 @@ departments_router.get('/',
 
 departments_router.put('/',
     async function(req, response) {
-        console.log(req.body);
+        console.log("PUT " + req.url , req.body);
         const result = await updateDocumentInCollection(req.body, "departments");
         return response.send("ok");   
     }
@@ -83,7 +87,7 @@ departments_router.put('/',
 
 departments_router.delete('/',
     async function(req, response) {
-
+        console.log("DELETE " + req.url , req.body);
         let result;
         if (req.query["_id"] != null) {result = await deleteDepartmentByID(req.query["_id"]);}
         else {result = deleteDepartmentbyDetail(req.query);}

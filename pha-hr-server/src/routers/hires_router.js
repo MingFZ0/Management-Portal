@@ -17,7 +17,7 @@ async function updateHire(input) {
 }
 
 async function getAllHires() {
-    console.log("Getting All Hires");
+    // console.log("Getting All Hires");
     let result = await getAllHiresFromCollection();
     //console.log(result);
     return result;
@@ -53,9 +53,9 @@ async function createDepartmentForHire(name) {
 
 async function createHireInformation(input, user_id, department_id) {
     let data = await JSON.stringify(input);
-    console.log("Hire Info: " + data);
-    console.log("   - user_id: " + user_id);
-    console.log("   - department_id: " + department_id);
+    // console.log("Hire Info: " + data);
+    // console.log("   - user_id: " + user_id);
+    // console.log("   - department_id: " + department_id);
     const combinedData = {
         "user_id": user_id,
         "department_id": department_id,
@@ -73,43 +73,50 @@ var hires_router = express.Router();
 //curl --header "Content-Type: application/json" --request POST --data '{"first_name":"very","last_name":"thing"}' http://localhost:5005/pharma/hr/api/hires/
 hires_router.post('/',
     async function(req, response) {
-        console.log("Posting new hire...");
-        console.log(" - Create new user");
+        console.log("POST " + req.url  , req.body);
+        // console.log("Posting new hire...");
+        // console.log(" - Create new user");
+        console.log(" - POST user");
         let userResult = await createUserForHire(req.body);
         const userID = await userResult["insertedId"];
-        // console.log(userID);
-        console.log("   - " + userResult);
+        // console.log("   - " + userResult);
 
-        console.log(" - Finding Department: " + req.body["department"]);
+        // console.log(" - Finding Department: " + req.body["department"]);
         let department;
         let departmentID;
         department = await getDepartmentOfHire(req.body["department"]);
         
-        if (department != null) {console.log("   - Found Department: " + department);}
+        if (department != null) {
+            console.log(" - GET Department");
+            // console.log("   - Found Department: " + department);
+        }
         else {
+            console.log(" - POST Department");
             department = await createDepartmentForHire(req.body["name"]);
-            console.log("   - Create new department: " + department);
+            // console.log("   - Create new department: " + department);
         }
         departmentID = await department["insertedId"];
 
-        console.log(" - Creating Hire...");
-        console.log(userID, departmentID);
+        // console.log(" - Creating Hire...");
+        // console.log(userID, departmentID);
+        console.log(" - POST hire");
         let hireResult = await JSON.stringify(await createHireInformation(req.body, userID, departmentID));
-        console.log("   - Created Hire: " + hireResult);
+        // console.log("   - Created Hire: " + hireResult);
         return response.send(hireResult);
     }
 )
 
 hires_router.get('/',
     async function(req, response) 
-    {
-        console.log(req.query);
+    {   
+        console.log("GET " + req.url , req.body);
+        // console.log(req.query);
         let result = null;
         if (req.query["_id"] == null) {result = await getAllHires();}
         else {
-            console.log("Get Hire By Detail: " + await JSON.stringify(req.query));
+            // console.log("Get Hire By Detail: " + await JSON.stringify(req.query));
             result = await getHireByID(req.query);
-            console.log(result);
+            // console.log(result);
         }
         return response.send(result);
     }
@@ -118,8 +125,9 @@ hires_router.get('/',
 hires_router.put('/',
     async function(req, response)
     {
+        console.log("PUT " + req.url , req.body);
         let displayInput = await JSON.stringify(req.body);
-        console.log("Putting data: " + displayInput);
+        // console.log("Putting data: " + displayInput);
         const result = await updateHire(req.body);
         return response.send(result);
 
@@ -128,8 +136,9 @@ hires_router.put('/',
 
 hires_router.delete('/',
     async function(req, response) {
+        console.log("DELETE " + req.url , req.body);
         let display = await JSON.stringify(req.body);
-        console.log("Deleting data: " + display);
+        // console.log("Deleting data: " + display);
 
         let bodyData = {"_id": await ObjectId.createFromHexString(req.body['_id'])};
         const result = await deleteDocumentInCollection(bodyData, "hires");

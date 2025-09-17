@@ -55,7 +55,7 @@ test("Delete Hire By Title", async() => {
 
 test("Delete User By Id", async() => {
     const addResult = await addToCollection({"first_name": "pl", "last_name": "pl"}, "users");
-    const addHireResult = await addToCollection({"user_id":addResult["insertedId"],"title": "pop"}, "hires")
-    const result = await deleteDocumentInCollection({"_id": addHireResult["insertedId"]}, "users");
+    const addHireResult = await addToCollection({"user_id":addResult["insertedId"],"title": "pop"}, "hires");
+    const result = await deleteDocumentInCollection({"_id": addHireResult["insertedId"]}, "hires");
     expect(result["deletedCount"]).toBe(1);
 })

@@ -30,11 +30,14 @@ variables:
 
     cd test
     echo -e "\n**** Run Jest db tests"
-    npm test db.test.js
-    npm test api.test.js
-    npm test users.test.js
-    npm test departments.test.js
-    npm test hires.test.js
+    npm test .\db\db.test.js
+    npm test .\db\db.users.test.js
+    npm test .\db\db.departments.test.js
+    npm test .\db\db.hires.test.js
+    npm test .\api\api.test.js
+    npm test .\api\api.users.test.js
+    npm test .\api\api.departments.test.js
+    npm test .\api\api.hires.test.js
   fi
 
 

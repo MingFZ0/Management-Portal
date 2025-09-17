@@ -3,7 +3,7 @@ import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInColl
 import { BSON, ObjectId } from 'mongodb';
 
 async function getAllUser() {
-    console.log("Get All From " + "users");
+    // console.log("Get All From " + "users");
     let cursor = await getAllItemFromCollection("users");
     let result = [];
     for await (const element of cursor) {
@@ -16,7 +16,7 @@ async function getAllUser() {
 
 async function getUsersByDetail(filter) {
     let details = await JSON.stringify(filter);
-    console.log("Get Users By: " + details);
+    // console.log("Get Users By: " + details);
 
     let cursor;
     if (filter["_id"] != null) {
@@ -29,13 +29,13 @@ async function getUsersByDetail(filter) {
         result.push(element);
     }
 
-    console.log(result);
+    // console.log(result);
 
     return result;
 }
 
 async function deleteUserByID(id) {
-    console.log("Deleting user of ID: " + id);
+    // console.log("Deleting user of ID: " + id);
 
     let filter = {"_id": await ObjectId.createFromHexString(id)};
     const result = await deleteDocumentInCollection(filter, "users");
@@ -52,7 +52,7 @@ var users_rounter = express.Router();
 users_rounter.post('/', 
     async function(req, response)
     {
-        console.log("Post to users:", req.body);
+        console.log("POST " + req.url , req.body);
         let result = await addToCollection(req.body, "users");
         return response.send(result);
     }
@@ -60,9 +60,9 @@ users_rounter.post('/',
 
 users_rounter.get('/count', 
     async function(req, response) {
-        console.log("Get Count From " + "users");
+        console.log("GET Count " + req.url , req.body);
         let result = await getCollectionCount("users");
-        console.log(result);
+        // console.log(result);
         return response.send({count: result});
     }
 )
@@ -73,6 +73,7 @@ users_rounter.get('/',
         // console.log(req.baseUrl,req.url);
         // console.log(req.query);//Look at all query string params
         // console.log(req.query['id']);
+        console.log("GET " + req.url , req.body);
         let result = null;
         console.log(req.query);
         if (req.url.length > 1) {
@@ -87,7 +88,7 @@ users_rounter.get('/',
 
 users_rounter.put('/',
     async function(req, response) {
-        console.log(req.body);
+        console.log("PUT " + req.url , req.body);
         // console.log("Updating id of " + req.body['_id'] + ": " + req.body);
         const result = await updateDocumentInCollection(req.body, "users");
         return response.send("ok");
@@ -96,7 +97,7 @@ users_rounter.put('/',
 
 users_rounter.delete('/',
     async function(req, response) {
-
+        console.log("DELETE " + req.url , req.body);
         let result;
         if (req.query["_id"] != null) {result = await deleteUserByID(req.query["_id"]);}
         else {result = deleteMultipleUserByFilter(req.query);}
