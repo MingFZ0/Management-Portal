@@ -1,0 +1,5 @@
+.toolBar {
+    /* background-image: url("../assets/cityline.jpg"); */
+    background: linear-gradient(rgba(255, 255, 255, 0.267), rgba(11, 119, 201, 0.558)), 
+                url('../assets/cityline.jpg');
+}

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Welcome } from "./pages/Welcome";
 import { Test } from "./pages/Test";
+import Nav from './pages/Nav';
 
 
 function PageRouter() {
@@ -11,10 +12,10 @@ function PageRouter() {
 
     return (
         <BrowserRouter>
-            {/* <Nav links = {menuLinks}></Nav> */}
+            <Nav links = {menuLinks}></Nav>
             <Routes>
                 <Route index path="/" element={<Welcome />} />
-                <Route path="/test" element={<Test />} />
+                <Route path="/record" element={<Test />} />
             </Routes>
         </BrowserRouter>
     )   
