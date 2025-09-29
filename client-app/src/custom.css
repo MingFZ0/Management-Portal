@@ -1,0 +1,12 @@
+.marginWidth
+{
+    width: 90%
+}
+
+.borderRow
+{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+
+}
