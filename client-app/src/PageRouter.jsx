@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { Welcome } from "./pages/Welcome";
 import { Test } from "./pages/Test";
 import Nav from './pages/Nav';
+import { Record } from './pages/Record';
 
 
 function PageRouter() {
@@ -15,7 +16,7 @@ function PageRouter() {
             <Nav links = {menuLinks}></Nav>
             <Routes>
                 <Route index path="/" element={<Welcome />} />
-                <Route path="/record" element={<Test />} />
+                <Route path="/record" element={<Record />} />
             </Routes>
         </BrowserRouter>
     )   
