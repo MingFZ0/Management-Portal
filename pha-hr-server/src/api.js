@@ -92,6 +92,7 @@ async function updateDocumentInCollection(data, collectionName) {
     // Specify the update to set values using _id as the filter ("WHERE" clause)
     delete data._id; //Get rid of the immutable _id prop otherwise mongo will complain
     const updateDoc = { $set: data };//Update the whole row.  $set is the mongo cmd to set the doc fields
+    console.log(data);
     const result = await collection.updateOne(filter, updateDoc);
     return result;
 }

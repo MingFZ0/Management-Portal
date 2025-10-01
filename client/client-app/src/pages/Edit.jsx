@@ -47,6 +47,15 @@ export default function Edit(props) {
             record[key] = value;
         })
 
+        if (record["email"] != null || record["address"] != null) {
+            record["contact"] = {email: record["email"], address: record["address"]}
+        }
+
+        Object.entries(record).forEach(([key, value]) => {
+            if (value.length == 0 && key != "contact") {record[key] = null;}
+        })
+        
+        console.log(record);
         record["_id"] = props.onEdit.row["id"];
         return record;
     }
@@ -140,7 +149,9 @@ export default function Edit(props) {
                 </DialogActions>
             </Dialog>
         </div>
-    )
+        )
+    }else {
+        return (<Button variant="text">Click On a row to Enable Editing</Button>)
     }
     
 }
