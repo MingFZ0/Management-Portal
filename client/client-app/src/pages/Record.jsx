@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Searcher from "./Searcher";
 import Adder from "./Adder";
+import Edit from "./Edit";
 
 export function Record() {
+
 
     let currentColumns = [];
     const userColumns = [
@@ -35,6 +37,7 @@ export function Record() {
     const [tabValue, setTabValue] = useState(0);
     const [columnData, setColumnData] = useState(hireColumns);
     const [rowData, setRowData] = useState({});
+    const [editRow, setEditRow] = useState({});
 
     async function parseUser(fetchedData) {
         let returnData = [];
@@ -171,6 +174,16 @@ export function Record() {
         }
     }
 
+    function onEdit(params, event) {
+        setEditRow(params);
+        console.log("Editing");
+    }
+
+    let onEditExit = () => {
+        setEditRow(null);
+        console.log("Exiting Edit");
+    }
+
     const updateRowdata = (data) => {
         console.log(data);
         setRowData(data);
@@ -191,11 +204,14 @@ export function Record() {
             </Tabs>
             <Searcher updateRowdata={updateRowdata}></Searcher>
             <Adder updateDefaultData={getData}></Adder>
+            <Edit onEdit={editRow} onEditExit={onEditExit}></Edit>
             <DataGrid
                 columns={columnData}
                 rows={rowData}
-                checkboxSelection
+                editMode="row"
+                onRowClick={onEdit}
                 initialState={{pagination: { page: 0, pageSize: 5, rowsPerPage: 15 }}}
+                
                 // pageSizeOptions={[5, 10]}
                 sx={{ border: 0 }}
             />
