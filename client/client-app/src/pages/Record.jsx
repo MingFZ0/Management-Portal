@@ -43,7 +43,7 @@ export function Record() {
         let returnData = [];
         let rawData = await fetchedData.text();
         let data = JSON.parse(rawData);
-        console.log(data)
+        // console.log(data)
         for (let i = 0; i < data.length; i++) {
             let email = null;
             let address = null;
@@ -84,7 +84,7 @@ export function Record() {
         let rawHireData = await fetchedData.text();
         let tempHireData = JSON.parse(rawHireData);
         for (let i = 0; i < tempHireData.length; i++) {
-            console.log(tempHireData[i]);
+            // console.log(tempHireData[i]);
             let email = null;
             let address = null;
 
@@ -182,6 +182,7 @@ export function Record() {
     let onEditExit = () => {
         setEditRow(null);
         console.log("Exiting Edit");
+        getData();
     }
 
     const updateRowdata = (data) => {

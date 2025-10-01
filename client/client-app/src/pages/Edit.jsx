@@ -30,8 +30,29 @@ export default function Edit(props) {
         console.log(response);
     }
 
+    async function generateSubmit(newData) {
+        let apiUrl = import.meta.env.VITE_API_URL;
+        apiUrl += "/" + cateogries[props.categorySelected] + "?_id=" + props.onEdit.row["id"];
+
+        console.log(apiUrl);
+        let completeData = await (await fetch(`http://${apiUrl}`)).text();
+        let completeDataParsed = await JSON.parse(completeData);
+        let record = {};
+
+        Object.entries(completeDataParsed).forEach(([key, value]) => {
+            record[key] = value;
+        })
+
+        Object.entries(newData).forEach(([key, value]) => {
+            record[key] = value;
+        })
+
+        record["_id"] = props.onEdit.row["id"];
+        return record;
+    }
+
     function generateFields() {
-        console.log(props.onEdit.row);
+        // console.log(props.onEdit.row);
         let record = {};
         if (cateogries[props.categorySelected] == "hires") {
             record["department_id"] = null;
@@ -51,12 +72,36 @@ export default function Edit(props) {
         let result = [];
         Object.entries(record).forEach(([key, value]) => {
             let enterValue = "";
+            let row;
             if (value != null) {enterValue = value;}
-            let row = <TextField label={key} defaultValue={enterValue} variant="outlined" name="attributeEditInput" onChange={ (event) => handleAttributeInput(event, key)}/>
+            if (key == "salary") {
+                row = <TextField label={key} defaultValue={enterValue} type="number" variant="outlined" name="attributeEditInput" onChange={ (event) => handleAttributeInput(event, key)}/>
+            }
+            else {
+                row = <TextField label={key} defaultValue={enterValue} variant="outlined" name="attributeEditInput" onChange={ (event) => handleAttributeInput(event, key)}/>
+            }
             result.push(row);
             })
 
         return result;
+    }
+
+    async function submitData() {
+        let newRecord = await generateSubmit(response);
+        console.log(newRecord);
+
+        let apiUrl = import.meta.env.VITE_API_URL;
+        apiUrl += "/" + cateogries[props.categorySelected];
+
+        let result = await fetch(`http://${apiUrl}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newRecord)
+        }).then();
+        console.log(result);
+        handleClose();
     }
 
     async function deleteData() {
@@ -89,7 +134,7 @@ export default function Edit(props) {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" onClick={handleClose}>Save</Button> 
+                    <Button variant="contained" onClick={submitData}>Save</Button> 
                     <Button variant="contained" onClick={handleClose}>Cancel</Button> 
                     <Button variant="contained" onClick={deleteData}>Delete</Button> 
                 </DialogActions>
