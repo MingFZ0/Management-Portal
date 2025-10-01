@@ -4,10 +4,14 @@ import { BSON, ObjectId } from 'mongodb';
 
 
 async function updateHire(input) {
+    let id = input["_id"];
+    let department_id = input["department_id"];
+    let user_id = input["user_id"];
+    
     const bodyData = {
-        "_id": input["_id"],
-        "department_id": input["department_id"],
-        "user_id": input["user_id"],
+        "_id": id,
+        "department_id": department_id,
+        "user_id": user_id,
         "title": input["title"],
         "salary": input["salary"]
     };
@@ -67,6 +71,15 @@ async function createHireInformation(input, user_id, department_id) {
     const result = await addToCollection(combinedData, "hires");
     return result;
 }
+
+async function deleteHireByID(id) {
+    // console.log("Deleting user of ID: " + id);
+
+    let filter = {"_id": await ObjectId.createFromHexString(id)};
+    const result = await deleteDocumentInCollection(filter, "hires");
+    return result;
+}
+
 
 var hires_router = express.Router();
 
@@ -138,10 +151,13 @@ hires_router.delete('/',
     async function(req, response) {
         console.log("DELETE " + req.url , req.body);
         let display = await JSON.stringify(req.body);
-        // console.log("Deleting data: " + display);
-
+        let result;
+        if (req.query["_id"] != null) {
+            result = deleteHireByID(req.query["_id"]);
+        }
         let bodyData = {"_id": await ObjectId.createFromHexString(req.body['_id'])};
-        const result = await deleteDocumentInCollection(bodyData, "hires");
+        result = await deleteDocumentInCollection(bodyData, "hires");
+
         return response.send(result);
     }
 )
