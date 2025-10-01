@@ -170,7 +170,27 @@ async function getHireByID(filter) {
     return result;
 }
 
+async function updateHireInCollection(data, collectionName) {
+    const db = await connect();
+    const collection = db.collection(collectionName);
+
+    let idValue = data['_id'];
+    const filter = { _id: ObjectId.createFromHexString(idValue) };
+
+    // Specify the update to set values using _id as the filter ("WHERE" clause)
+    delete data._id; //Get rid of the immutable _id prop otherwise mongo will complain
+    const updateDoc = { $set: {
+        department_id: ObjectId.createFromHexString(data["department_id"]),
+        user_id: ObjectId.createFromHexString(data["user_id"]),
+        title: data["title"],
+        salary: data["salary"]
+    } };//Update the whole row.  $set is the mongo cmd to set the doc fields
+    const result = await collection.updateOne(filter, updateDoc);
+    return result;
+}
+
 
 export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemsFromCollection, getCollectionCount,
-    updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getHireByID
+    updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getHireByID,
+    updateHireInCollection
 };

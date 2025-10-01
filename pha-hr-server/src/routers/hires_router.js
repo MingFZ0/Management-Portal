@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getAllItemFromCollection,getCollectionCount, getHireByID, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getAllItemFromCollection,getCollectionCount, getHireByID, getItemsFromCollection, updateDocumentInCollection, updateHireInCollection} from '../api.js';
 import { BSON, ObjectId } from 'mongodb';
 
 
@@ -16,7 +16,7 @@ async function updateHire(input) {
         "salary": input["salary"]
     };
 
-    let result = updateDocumentInCollection(bodyData, "hires");
+    let result = updateHireInCollection(bodyData, "hires");
     return result;
 }
 
