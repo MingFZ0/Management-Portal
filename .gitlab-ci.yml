@@ -42,7 +42,14 @@ variables:
     cd test
     echo "Run Jest tests"
     npm test db.test.js
+    npm test db.users.test.js
+    npm test db.departments.test.js
+    npm test db.hires.test.js
     npm test api.test.js
+    npm test api.users.test.js
+    npm test api.departments.test.js
+    npm test api.hires.test.js
+
   fi
 
 
