@@ -153,7 +153,7 @@ export function Record() {
     async function handleTabChange(event, value) {
         setTabValue(value);
         await getData();
-        if (value == 0) {
+        if (value == 2) {
             console.log(collectionData.users);
             setRowData(collectionData.users);
             setColumnData(userColumns);
@@ -168,8 +168,6 @@ export function Record() {
             setRowData(collectionData.hires);
             setColumnData(hireColumns);
         }
-        
-        
     }
 
     const updateRowdata = (data) => {
@@ -184,9 +182,11 @@ export function Record() {
     return (
         <Box>    
             <Tabs value={tabValue} onChange={handleTabChange} className="tabs">
-                <Tab label="Users" value={0}></Tab>
+                <Tab label="Hires" value={0}></Tab>
                 <Tab label="Departments" value={1}></Tab>
-                <Tab label="Hires" value={2}></Tab>
+                <Tab label="Users" value={2}></Tab>
+                
+                
             </Tabs>
             <Searcher updateRowdata={updateRowdata}></Searcher>
             <DataGrid

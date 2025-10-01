@@ -59,9 +59,10 @@ export default function Searcher(props) {
     }
 
     const categories = [
-        <MenuItem key={"users"} value={"users"}>User</MenuItem>,
+        <MenuItem key={"hires"} value={"hires"}>Hire</MenuItem>,        
         <MenuItem key={"departments"} value={"departments"}>Department</MenuItem>,
-        <MenuItem key={"hires"} value={"hires"}>Hire</MenuItem>
+        <MenuItem key={"users"} value={"users"}>User</MenuItem>
+        
     ]
 
     // const userAttributes = ["id", "first_name", "last_name", "email", "address"];
