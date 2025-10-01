@@ -3,8 +3,8 @@ import { useState } from "react";
 
 
 export default function Searcher(props) {
-    const updateRowdata = (data) => {
-        props.updateRowdata(data);
+    const updateRowdata = (data, selectedCategory) => {
+        props.updateRowdata(data, selectedCategory);
     }
     const [open, setOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState();
@@ -20,7 +20,11 @@ export default function Searcher(props) {
 
         let result = await (await fetch(`http://${apiUrl}`)).text();
         let data = JSON.parse(result);
-        // console.log(data);
+
+        data.forEach(row => {
+            row["id"] = row["_id"];
+        });
+        console.log(data);
         return data;
     }
 
@@ -35,7 +39,8 @@ export default function Searcher(props) {
 
     async function handleSubmit() {
         let data = await getFetch();
-        updateRowdata(data);
+        
+        updateRowdata(data, selectedCategory);
         handleClose();
     }
 

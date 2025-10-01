@@ -185,9 +185,13 @@ export function Record() {
         getData();
     }
 
-    const updateRowdata = (data) => {
+    const updateRowdata = (data, selectedCategory) => {
         console.log(data);
+        if (selectedCategory == "users") {setColumnData(userColumns)}
+        else if (selectedCategory == "departments") {setColumnData(departmentColumns)}
+        if (selectedCategory == "hires") {setColumnData(hireColumns)}
         setRowData(data);
+
     }
 
     useEffect(() => {setTimeout(getData, 0)}, []);
