@@ -97,8 +97,8 @@ pages:
     - echo ">>>>Running Client build script"
     #Must have a public folder -- gitlab will copy files from there to deploy
     #CI_PROJECT_DIR is pre-defined by gitlab
-    - mkdir $CI_PROJECT_DIR'/public'
-    - mkdir $CI_PROJECT_DIR'/public/'$REACT_APP_FOLDER
+    # - mkdir $CI_PROJECT_DIR'/public'
+    # - mkdir $CI_PROJECT_DIR'/public/'$REACT_APP_FOLDER
     - CI=""
     - *script-run-react-client  
 
