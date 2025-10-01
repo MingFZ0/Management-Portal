@@ -15,7 +15,8 @@ function PageRouter() {
         <BrowserRouter>
             <Nav links = {menuLinks}></Nav>
             <Routes>
-                <Route index path="/" element={<Welcome />} />
+                <Route index path="*" element={<Welcome />} />
+                <Route path="/" element={<Welcome />} />
                 <Route path="/record" element={<Record />} />
             </Routes>
         </BrowserRouter>
