@@ -204,13 +204,18 @@ export function Record() {
             </Tabs>
             <Searcher updateRowdata={updateRowdata}></Searcher>
             <Adder updateDefaultData={getData}></Adder>
-            <Edit onEdit={editRow} onEditExit={onEditExit}></Edit>
+            <Edit onEdit={editRow} onEditExit={onEditExit} categorySelected={tabValue}></Edit>
             <DataGrid
                 columns={columnData}
                 rows={rowData}
                 editMode="row"
                 onRowClick={onEdit}
-                initialState={{pagination: { page: 0, pageSize: 5, rowsPerPage: 15 }}}
+                initialState={{
+                    pagination: {
+                    paginationModel: { pageSize: 7, page: 0 },
+                    },
+                }}
+                // paginationModel={{pageSize: 15}}
                 
                 // pageSizeOptions={[5, 10]}
                 sx={{ border: 0 }}
