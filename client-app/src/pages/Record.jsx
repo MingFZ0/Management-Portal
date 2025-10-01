@@ -1,12 +1,9 @@
 import { Box, Button, CardContent, CardHeader, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import RecordPanel from "./RecordPanel";
-import { SearchRecord } from "./SearchRecord";
+import Searcher from "./Searcher";
 
 export function Record() {
-
-    
 
     let currentColumns = [];
     const userColumns = [
@@ -36,7 +33,77 @@ export function Record() {
     const [collectionData, setCollectionData] = useState([]);
     const [tabValue, setTabValue] = useState(0);
     const [columnData, setColumnData] = useState(hireColumns);
-    const [rowData, setRowData] = useState();
+    const [rowData, setRowData] = useState({});
+
+    async function parseUser(fetchedData) {
+        let returnData = [];
+        let rawData = await fetchedData.text();
+        let data = JSON.parse(rawData);
+        console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            let email = null;
+            let address = null;
+
+            if (data[i].contact != null) {
+                email = data[i]["contact"]["email"];
+                address = data[i]["contact"]["address"];
+            }
+
+            let row = {
+                id: data[i]["_id"],
+                first_name: data[i]["first_name"],
+                last_name: data[i]["last_name"],
+                email: email,
+                address: address,
+            };
+            returnData.push(row);
+        }
+        return returnData;
+    }
+
+    async function parseDepartment(fetchedData) {
+        let returnData = [];
+        let rawData = await fetchedData.text();
+        let data = JSON.parse(rawData);
+        for (let i = 0; i < data.length; i++) {
+            let row = {
+                id: data[i]["_id"],
+                name: data[i]["name"],
+            };
+            returnData.push(row);
+        }
+        return returnData;
+    }
+
+    async function parseHire(fetchedData) {
+        let returnData = [];
+        let rawHireData = await fetchedData.text();
+        let tempHireData = JSON.parse(rawHireData);
+        for (let i = 0; i < tempHireData.length; i++) {
+            console.log(tempHireData[i]);
+            let email = null;
+            let address = null;
+
+            if (tempHireData[i].contact != null) {
+                email = tempHireData[i]["contact"]["email"];
+                address = tempHireData[i]["contact"]["address"];
+            }
+
+            let row = {
+                id: tempHireData[i]["_id"],
+                first_name: tempHireData[i]["first_name"],
+                last_name: tempHireData[i]["last_name"],
+                email: email,
+                address: address,
+                department: tempHireData[i]["department"],
+                title: tempHireData[i]["title"],
+                salary: tempHireData[i]["salary"]
+            };
+            returnData.push(row);
+            // console.log(returnData);
+        }
+        return returnData;
+    }
 
     async function getData() {
 
@@ -44,7 +111,7 @@ export function Record() {
         let departmentData = [];
         let hireData = [];
         try {
-            let apiUrl = import.meta.env.VITE_API_URL;
+            const apiUrl = import.meta.env.VITE_API_URL;
             console.log(`Getting Data; API URL is ${apiUrl}`);
             
             let userResult = await fetch(`http://${apiUrl}/users`);
@@ -52,74 +119,22 @@ export function Record() {
             let departmentResult = await fetch(`http://${apiUrl}/departments`);
 
             let hireResult = await fetch(`http://${apiUrl}/hires`);
-            console.log("HJIRE: " + hireResult.status);
-            // console.log(hireResult)
 
             if (userResult.status == 200) {
-                let rawData = await userResult.text();
-                let data = JSON.parse(rawData);
-                console.log(data)
-                for (let i = 0; i < data.length; i++) {
-                    let email = null;
-                    let address = null;
-
-                    if (data[i].contact != null) {
-                        email = data[i]["contact"]["email"];
-                        address = data[i]["contact"]["address"];
-                    }
-
-                    let row = {
-                        id: data[i]["_id"],
-                        first_name: data[i]["first_name"],
-                        last_name: data[i]["last_name"],
-                        email: email,
-                        address: address,
-                    };
-                    userData.push(row);
-                }
+                userData = await parseUser(userResult);
             }
 
             if (departmentResult.status == 200) {
-                let rawData = await departmentResult.text();
-                let data = JSON.parse(rawData);
-                for (let i = 0; i < data.length; i++) {
-                    let row = {
-                        id: data[i]["_id"],
-                        name: data[i]["name"],
-                    };
-                    departmentData.push(row);
-                }
+                departmentData = await parseDepartment(departmentResult);
             }
 
             if (hireResult.status == 200) {
-                let rawHireData = await hireResult.text();
-                let tempHireData = JSON.parse(rawHireData);
-                console.log(tempHireData[0]["first_name"]);
-                for (let i = 0; i < tempHireData.length; i++) {
-                    // console.log(tempHireData[i]);
-                    let email = null;
-                    let address = null;
+                hireData = await parseHire(hireResult);
+                // console.log(hireData);
 
-                    if (tempHireData[i].contact != null) {
-                        email = tempHireData[i]["contact"]["email"];
-                        address = tempHireData[i]["contact"]["address"];
-                    }
-
-                    let row = {
-                        id: tempHireData[i]["_id"],
-                        first_name: tempHireData[i]["first_name"],
-                        last_name: tempHireData[i]["last_name"],
-                        email: email,
-                        address: address,
-                        department: tempHireData[i]["department"],
-                        title: tempHireData[i]["title"],
-                        salary: tempHireData[i]["salary"]
-                    };
-                    hireData.push(row);
-                }
             }
             try {
-                console.log(hireData);
+                // console.log(hireData);
                 setCollectionData({users: userData, departments: departmentData, hires: hireData});
                 setRowData(hireData);
                 
@@ -137,10 +152,11 @@ export function Record() {
 
     async function handleTabChange(event, value) {
         setTabValue(value);
+        await getData();
         if (value == 0) {
-            console.log(collectionData.hires);
-            setRowData(collectionData.hires);
-            setColumnData(hireColumns);
+            console.log(collectionData.users);
+            setRowData(collectionData.users);
+            setColumnData(userColumns);
         }
         else if (value == 1) {
             console.log(collectionData.departments);
@@ -148,10 +164,17 @@ export function Record() {
             setColumnData(departmentColumns);
         }
         else {
-            console.log(collectionData.users);
-            setRowData(collectionData.users);
-            setColumnData(userColumns);
+            console.log(collectionData.hires);
+            setRowData(collectionData.hires);
+            setColumnData(hireColumns);
         }
+        
+        
+    }
+
+    const updateRowdata = (data) => {
+        console.log(data);
+        setRowData(data);
     }
 
     useEffect(() => {setTimeout(getData, 0)}, []);
@@ -161,11 +184,11 @@ export function Record() {
     return (
         <Box>    
             <Tabs value={tabValue} onChange={handleTabChange} className="tabs">
-                <Tab label="Hires" value={0}></Tab>
+                <Tab label="Users" value={0}></Tab>
                 <Tab label="Departments" value={1}></Tab>
-                <Tab label="Users" value={2}></Tab>
+                <Tab label="Hires" value={2}></Tab>
             </Tabs>
-            {/* <SearchRecord></SearchRecord> */}
+            <Searcher updateRowdata={updateRowdata}></Searcher>
             <DataGrid
                 columns={columnData}
                 rows={rowData}

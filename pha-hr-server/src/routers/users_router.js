@@ -75,7 +75,7 @@ users_rounter.get('/',
         // console.log(req.query['id']);
         console.log("GET " + req.url , req.body);
         let result = null;
-        console.log(req.query);
+        console.log(req.query["first_name"] + req.query["last_name"]);
         if (req.url.length > 1) {
             result = await getUsersByDetail(req.query);
         } 
