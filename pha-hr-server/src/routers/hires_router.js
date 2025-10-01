@@ -7,6 +7,8 @@ async function updateHire(input) {
     let id = input["_id"];
     let department_id = input["department_id"];
     let user_id = input["user_id"];
+
+    console.log(id);
     
     const bodyData = {
         "_id": id,

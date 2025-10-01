@@ -180,12 +180,27 @@ async function updateHireInCollection(data, collectionName) {
 
     // Specify the update to set values using _id as the filter ("WHERE" clause)
     delete data._id; //Get rid of the immutable _id prop otherwise mongo will complain
-    const updateDoc = { $set: {
+    let updateDoc;
+    if (data["user_id"] != null && data["department_id"] != null) {
+        updateDoc = { $set: {
         department_id: ObjectId.createFromHexString(data["department_id"]),
         user_id: ObjectId.createFromHexString(data["user_id"]),
         title: data["title"],
         salary: data["salary"]
-    } };//Update the whole row.  $set is the mongo cmd to set the doc fields
+    } };
+    } else if (data["department_id"] != null) {
+        updateDoc = { $set: {
+        department_id: ObjectId.createFromHexString(data["department_id"]),
+        title: data["title"],
+        salary: data["salary"]
+    } };
+    } else {
+        updateDoc = { $set: {
+        title: data["title"],
+        salary: data["salary"]
+    } };
+    }
+    //Update the whole row.  $set is the mongo cmd to set the doc fields
     const result = await collection.updateOne(filter, updateDoc);
     return result;
 }
