@@ -65,10 +65,6 @@ export default function Searcher(props) {
         
     ]
 
-    // const userAttributes = ["id", "first_name", "last_name", "email", "address"];
-    // const departmentAttributes = ["id", "name"];
-    // const hireAttributes = ["id", "user_id", "title", "department", "salary"];
-
     const userAttributes = {"id":'', "first_name":'', "last_name":'', "email":'', "address":''};
     const departmentAttributes = {"id":'', "name":''};
     const hireAttributes = {"id":'', "user_id":'', "title":'', "department":'', "salary":null};
@@ -76,10 +72,7 @@ export default function Searcher(props) {
     let inputAttributes = () => {
         let result = []
         if (selectedCategory == "users") {
-            // userAttributes.entries.forEach((key, value) => {
-            //     let row = <TextField label={key} variant="outlined" name="attributeSearchInput"/>
-            //     result.push(row)
-            // });
+
             Object.entries(userAttributes).forEach(([key, value]) => {
                 let row = <TextField label={key} variant="outlined" name="attributeSearchInput" onChange={ (event) => handleAttributeInput(event, userAttributes, key)}/>
                 result.push(row);
