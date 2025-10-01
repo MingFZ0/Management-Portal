@@ -40,6 +40,21 @@ variables:
     npm test api.hires.test.js
   fi
 
+.script-run-react-client: &script-run-react-client |
+  echo -e "\nRunning React client script"
+  cd $CI_PROJECT_DIR
+  pwd
+  ls -l
+  cd $CLIENT_FOLDER'/'$REACT_APP_FOLDER
+  pwd
+  ls -lFa
+
+  npm install
+  npm run build
+  ls -lFa
+  echo "Copy 'dist' folder after build to gitlab public folder"
+  cp -p -r dist/* $CI_PROJECT_DIR'/public/'$REACT_APP_FOLDER 
+  echo "Your web page will be at" $CI_PAGES_URL'/'$REACT_APP_FOLDER
 
 
 cache:

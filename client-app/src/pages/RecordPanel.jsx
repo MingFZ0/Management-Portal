@@ -1,15 +1,10 @@
 
 
-export default async function RecordPanel(props) {
+export default function RecordPanel(props) {
+    console.log(props);
     let hire = props.data;
 
-    let render = () => {
-        setTimeout
-    }
-    let panel = async() => {
-        setTimeout(() => {
-            
-        }, 10);
+    let panel = () => {
         let arr = [];
         for (let i = 0; i < hire.length; i++) {
             let first_name = hire["first_name"];
@@ -28,7 +23,7 @@ export default async function RecordPanel(props) {
         return arr;
     }
 
-    console.log(props.data);
+    // console.log(props.data);
 
 
     return (
