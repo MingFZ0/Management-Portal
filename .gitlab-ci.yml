@@ -40,6 +40,23 @@ variables:
     npm test api.hires.test.js
   fi
 
+cache:
+  paths:
+  - node_modules/
+
+before_script:
+  - pwd
+  - node --version
+
+testrunner:
+  script:
+    - CI="" #Ignore warnings.  e.g. unused classes are warnings but will stop build w/o this
+    - echo "Check current directory"
+    - pwd
+    - *script-run-server  
+  stage: test
+
+
 .script-run-react-client: &script-run-react-client |
   echo -e "\nRunning React client script"
   cd $CI_PROJECT_DIR
@@ -73,3 +90,18 @@ testrunner:
     - *script-run-server  
   stage: test
 
+pages:
+  stage: deploy
+  script:
+    - pwd
+    - echo ">>>>Running Client build script"
+    #Must have a public folder -- gitlab will copy files from there to deploy
+    #CI_PROJECT_DIR is pre-defined by gitlab
+    - mkdir $CI_PROJECT_DIR'/public'
+    - mkdir $CI_PROJECT_DIR'/public/'$REACT_APP_FOLDER
+    - CI=""
+    - *script-run-react-client  
+
+  artifacts:
+    paths:
+    - public
