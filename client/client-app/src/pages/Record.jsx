@@ -2,6 +2,7 @@ import { Box, Button, CardContent, CardHeader, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Searcher from "./Searcher";
+import Adder from "./Adder";
 
 export function Record() {
 
@@ -189,6 +190,7 @@ export function Record() {
                 
             </Tabs>
             <Searcher updateRowdata={updateRowdata}></Searcher>
+            <Adder updateDefaultData={getData}></Adder>
             <DataGrid
                 columns={columnData}
                 rows={rowData}
