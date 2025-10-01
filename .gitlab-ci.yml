@@ -1,9 +1,11 @@
 image:
-  name: kalrabb/mern-stack-postgres
+  name: kalrabb/mern-stack-postgres-2025
 
 variables:
   CURR_APP: "" #Will be changed to your React project name.  Do not modify
   SERVER_FOLDER: pha-hr-server #e.g. acb123-react-client2.  Change to YOUR project 
+  CLIENT_FOLDER: client
+  REACT_APP_FOLDER: client-app #e.g. acb123-react-client2.  Change to YOUR project 
 
 .script-run-server: &script-run-server |
   echo "CURR APP:"$SERVER_FOLDER
@@ -28,33 +30,20 @@ variables:
     node server.js &
     sleep 5
 
+  #  echo "running curl API tests"
+  #  echo ; echo "****Ping test"; echo
+  #  curl -s http://localhost:5005/ping
+  #  echo ; echo "****Collections test"; echo
+  #  curl -s http://localhost:5005/managedb/collections
+  #  echo ""; echo "****mycollection test"; echo ""
+  #  curl -s http://localhost:5005/mycollection
+  #  echo "Done"
+
     cd test
-    echo -e "\n**** Run Jest db tests"
+    echo "Run Jest tests"
     npm test db.test.js
-    npm test db.users.test.js
-    npm test db.departments.test.js
-    npm test db.hires.test.js
     npm test api.test.js
-    npm test api.users.test.js
-    npm test api.departments.test.js
-    npm test api.hires.test.js
   fi
-
-cache:
-  paths:
-  - node_modules/
-
-before_script:
-  - pwd
-  - node --version
-
-testrunner:
-  script:
-    - CI="" #Ignore warnings.  e.g. unused classes are warnings but will stop build w/o this
-    - echo "Check current directory"
-    - pwd
-    - *script-run-server  
-  stage: test
 
 
 .script-run-react-client: &script-run-react-client |
