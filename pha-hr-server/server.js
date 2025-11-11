@@ -10,8 +10,11 @@ import departments_router from './src/routers/departments_router.js';
 
 import { getCollectionCount, getCollections, getMyCollection} from './src/api.js';
 import hires_router from './src/routers/hires_router.js';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const dataDir = join(__dirname, "./data");
 
 const app = express();
 app.use(cors()); //Enable cors for client-server APIs
@@ -41,10 +44,10 @@ app.get('/mycollection',
     }
 )
 
-app.get('/pharma/hr/api/init',
+app.get('/hr/api/init',
     async function(req, response) {
         console.log("Resetting DB...");
-        await initDB("./data/pharmahr.csv");
+        await initDB(join(dataDir, "pharmahr.csv"));
         let result = await getCollectionCount("users");
 
         let returnResult = await JSON.stringify({"count":result})
@@ -53,9 +56,9 @@ app.get('/pharma/hr/api/init',
     }
 )
 
-app.use('/pharma/hr/api/users/', users_rounter);
-app.use('/pharma/hr/api/departments/', departments_router);
-app.use('/pharma/hr/api/hires/', hires_router);
+app.use('/hr/api/users/', users_rounter);
+app.use('/hr/api/departments/', departments_router);
+app.use('/hr/api/hires/', hires_router);
 
 //Starts the server, listening on the specified PORT and prints a message when it starts
 app.listen(process.env.PORT, ()=> {

@@ -4,6 +4,8 @@ import { Test } from "./pages/Test";
 import Nav from './pages/Nav';
 import { Record } from './pages/Record';
 
+const BASE_NAME = import.meta.env.VITE_BASE_NAME || "/";
+
 
 function PageRouter() {
     let menuLinks = [
@@ -12,7 +14,7 @@ function PageRouter() {
     ]
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={BASE_NAME}>
             <Nav links = {menuLinks}></Nav>
             <Routes>
                 <Route index path="*" element={<Welcome />} />

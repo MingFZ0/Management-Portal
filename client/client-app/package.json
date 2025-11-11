@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "/pharma/hr",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build --base=./",
+    "build": "vite build --base=/hr",
     "lint": "eslint .",
     "preview": "vite preview"
   },
