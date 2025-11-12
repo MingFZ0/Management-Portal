@@ -3,6 +3,7 @@ import { Welcome } from "./pages/Welcome";
 import { Test } from "./pages/Test";
 import Nav from './pages/Nav';
 import { Record } from './pages/Record';
+import Nav2 from './pages/Nav2';
 
 const BASE_NAME = import.meta.env.VITE_BASE_NAME || "/";
 
@@ -15,7 +16,8 @@ function PageRouter() {
 
     return (
         <BrowserRouter basename={BASE_NAME}>
-            <Nav links = {menuLinks}></Nav>
+            {/* <Nav links = {menuLinks}></Nav> */}
+            <Nav2></Nav2>
             <Routes>
                 <Route index path="*" element={<Welcome />} />
                 <Route path="/" element={<Welcome />} />

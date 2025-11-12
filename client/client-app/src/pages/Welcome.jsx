@@ -3,16 +3,27 @@ import { useState } from 'react';
 
 import coverImg from "../assets/coverImg.png";
 import "./Welcome.css";
+import { Link } from 'react-router';
+import Footer from './footer';
 
 export function Welcome()
 {
     return(
-        <Box sx={{marginLeft:20, marginRight:20}}>
-            <Typography variant='h3' className='welcomeText'>Welcome to Pharamacy HR Header Quarters</Typography>
-            <img src={coverImg} className='coverImg'></img>
-            <Card className="welcomeDescriptionCard">
-                <CardContent className="welcomeDescription">This is the HR department of the Pharmaceutical. To get started, consider clicking on the records link on the navigation bar.</CardContent>
-            </Card>
+        <Box>
+            <Box sx={{marginLeft:20, marginRight:20}}>
+                <Typography variant='h3' className='welcomeText'>Welcome to Pharamacy HR Header Quarters</Typography>
+                <Typography variant='body1' className='welcomeBody'>
+                    This is the HR department of the Pharmaceutical. To get started, consider clicking on the records button below.
+                </Typography>
+                <img src={coverImg} className='coverImg'></img>
+                <div className='recordButton'>
+                    <Button variant="contained">
+                        <Link style={{color:"white"}} to={"/record"}>Record</Link>
+                    </Button>
+                </div>
+            </Box>
+            
+            <Footer></Footer>
         </Box>
     )
 }

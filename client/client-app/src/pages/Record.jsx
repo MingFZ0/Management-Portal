@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Searcher from "./Searcher";
 import Adder from "./Adder";
 import Edit from "./Edit";
+import Footer from "./footer";
 
 export function Record() {
 
@@ -225,6 +226,7 @@ export function Record() {
                 // pageSizeOptions={[5, 10]}
                 sx={{ border: 0 }}
             />
+            <Footer></Footer>
         </Box>
     )
 }
