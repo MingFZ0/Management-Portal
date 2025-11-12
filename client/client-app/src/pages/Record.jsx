@@ -5,6 +5,7 @@ import Searcher from "./Searcher";
 import Adder from "./Adder";
 import Edit from "./Edit";
 import Footer from "./footer";
+import "./Record.css";
 
 export function Record() {
 
@@ -208,24 +209,28 @@ export function Record() {
                 
                 
             </Tabs>
-            <Searcher updateRowdata={updateRowdata}></Searcher>
-            <Adder updateDefaultData={getData}></Adder>
-            <Edit onEdit={editRow} onEditExit={onEditExit} categorySelected={tabValue}></Edit>
-            <DataGrid
-                columns={columnData}
-                rows={rowData}
-                editMode="row"
-                onRowClick={onEdit}
-                initialState={{
-                    pagination: {
-                    paginationModel: { pageSize: 7, page: 0 },
-                    },
-                }}
-                // paginationModel={{pageSize: 15}}
-                
-                // pageSizeOptions={[5, 10]}
-                sx={{ border: 0 }}
-            />
+                <div className="recordContent"> 
+                    <div className="controlButtons">
+                        <Searcher updateRowdata={updateRowdata}></Searcher>
+                        <Adder updateDefaultData={getData}></Adder>
+                        <Edit onEdit={editRow} onEditExit={onEditExit} categorySelected={tabValue}></Edit>
+                    </div>
+                    <div className="table">
+                        <DataGrid
+                            columns={columnData}
+                            rows={rowData}
+                            editMode="row"
+                            onRowClick={onEdit}
+                            initialState={{
+                                pagination: {
+                                paginationModel: { pageSize: 7, page: 0 },
+                                },
+                            }}/>
+                </div>
+            </div>
+            
+            
+            
             <Footer></Footer>
         </Box>
     )

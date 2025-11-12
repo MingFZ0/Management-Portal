@@ -151,7 +151,7 @@ export default function Edit(props) {
         </div>
         )
     }else {
-        return (<Button variant="text">Click On a row to Enable Editing</Button>)
+        return (<Button variant="text">*Click On a row to Enable Editing</Button>)
     }
     
 }

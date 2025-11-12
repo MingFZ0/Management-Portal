@@ -1,0 +1,15 @@
+.recordContent {
+    display: grid;
+    grid-template-columns: "controlButtons table";
+    grid-template-columns: 1fr 10fr;
+    gap: 50px;
+}
+
+.controlButtons {
+    padding-top: 20px;
+    /* margin-left: 10px; */
+}
+
+.controlButtons > * {
+    margin-bottom: 10px;
+}
