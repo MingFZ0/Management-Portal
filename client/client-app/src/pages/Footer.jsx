@@ -31,7 +31,7 @@ export function Footer() {
 		"&:hover": { color: "primary.light" },
 	};
 	const theme = useTheme();
-	console.log(theme.palette);
+	// console.log(theme.palette);
 
 	const currentYear = new Date().getFullYear();
 

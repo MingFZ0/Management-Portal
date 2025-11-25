@@ -228,10 +228,6 @@ export function Record() {
                             }}/>
                 </div>
             </div>
-            
-            
-            
-            <Footer></Footer>
         </Box>
     )
 }

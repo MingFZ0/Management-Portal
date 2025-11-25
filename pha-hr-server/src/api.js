@@ -205,8 +205,74 @@ async function updateHireInCollection(data, collectionName) {
     return result;
 }
 
+async function getHireCountOfDepartments() {
+     const db = await connect();
+    const hires = db.collection("hires");
+    let aggCursor = hires.aggregate([
+            {
+                $lookup: {
+                    from: "departments",
+                    localField: "department_id",
+                    foreignField: "_id",
+                    as: "result"
+                }
+            },
+            {
+                $unwind: "$result"
+            },
+            {
+                $group: {
+                    _id: "$result.name",
+                    count: {$sum: 1}
+                }
+            }
+    ]);
+    
+    let joinedData = [];
+    for await (const element of aggCursor) {
+        joinedData.push(element)
+    }
+    return joinedData;
+}
+
+async function getDepartmentAvgSalary() {
+    const db = await connect();
+    const hires = db.collection("hires");
+    let aggCursor = hires.aggregate([
+        {
+            $lookup: {
+            from: "departments",
+            localField: "department_id",
+            foreignField: "_id",
+            as: "dept"
+            }
+        },
+        { $unwind: "$dept" },
+        {
+            $group: {
+            _id: "$dept._id",                        // group by department
+            department_name: { $first: "$dept.name" },
+            average_salary: { $avg: "$salary" }      // compute average salary
+            }
+        },
+        {
+            $project: {
+            _id: 0,
+            department_name: 1,
+            average_salary: 1
+            }
+        }
+    ]);
+    
+    let joinedData = [];
+    for await (const element of aggCursor) {
+        joinedData.push(element)
+    }
+    return joinedData;
+}
+
 
 export {getCollections, getMyCollection, addToCollection, getAllItemFromCollection, getItemsFromCollection, getCollectionCount,
     updateDocumentInCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllHiresFromCollection, getHireByID,
-    updateHireInCollection
+    updateHireInCollection, getHireCountOfDepartments, getDepartmentAvgSalary
 };

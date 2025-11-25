@@ -27,11 +27,22 @@
 .welcomeBody {
 }
 
-.recordButton {
+.chart {
+    margin-top: 50px;
+}
+
+.buttonGroup {
   /* border: 10px solid rgba(13, 148, 210, 0.485); */
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  gap: 30px;
+}
+
+.actionButton {
+    display: inline-block;
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
 .welcomeDescription {
@@ -41,4 +52,19 @@
     color: rgb(39, 44, 44);
     font-weight: 300;
     background-color: rgba(204, 217, 222, 0.367);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: "dashboardControl dashboardChart";
+    grid-template-columns: 2fr 10fr;
+    gap: 50px;
+}
+
+.dashboardControl .dashboardButton {
+    margin: 15px;
+}
+
+.dashboardButton {
+    width: 80%;
 }

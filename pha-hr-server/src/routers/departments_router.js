@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
+import { addToCollection, deleteDocumentInCollection, deleteMultiDocumentsInCollection, getAllItemFromCollection,getCollectionCount, getDepartmentAvgSalary, getHireCountOfDepartments, getItemsFromCollection, updateDocumentInCollection} from '../api.js';
 import { BSON, ObjectId } from 'mongodb';
 
 var departments_router = express.Router();
@@ -42,6 +42,10 @@ async function getDepartment(filter) {
         result.push(element);
     }
     return result;
+}
+
+async function getHireStats() {
+
 }
 
 departments_router.post('/',
@@ -94,6 +98,24 @@ departments_router.delete('/',
 
         const returnResult = await JSON.stringify(result);
         return response.send(returnResult);
+    }
+)
+
+departments_router.get('/stats/hires',
+    async function(req, response) {
+        let result = null;
+        console.log("GET " + req.url , req.body);
+        result = await getHireCountOfDepartments();
+        return response.send(result);
+    }
+)
+
+departments_router.get('/stats/avgSalary',
+    async function(req, response) {
+        let result = null;
+        console.log("GET " + req.url , req.body);
+        result = await getDepartmentAvgSalary();
+        return response.send(result);
     }
 )
 
